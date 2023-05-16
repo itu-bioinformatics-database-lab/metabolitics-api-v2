@@ -69,6 +69,7 @@ def migrate():
     disease3 = Disease(name="abc", synonym="z")
     user = User(name="Alper", surname="Dokay", email="alperdokay@sehir.edu.tr", password="test123")
     user2 = User(name="Taj", surname="Saleh", email="tajothman@std.sehir.edu.tr", password="test123")
+    user3 = User(name="Demo", surname="User", email="demo", password="demo")
 
     db.session.add(method1)
     db.session.add(method2)
@@ -78,6 +79,7 @@ def migrate():
     db.session.add(disease3)
     db.session.add(user)
     db.session.add(user2)
+    db.session.add(user3)
     db.session.commit()
 
 
