@@ -9,6 +9,8 @@ class BaseConfig:
     #     os.getenv('POSTGRES_ADDRESS', 'localhost'),
     #     os.getenv('POSTGRES_DB', 'postgres'))
 
+    # SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:boss123@localhost/postgres'
+    
     # Uncomment below line for local development on Docker
     # SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:boss123@172.17.0.3/postgres'
 
