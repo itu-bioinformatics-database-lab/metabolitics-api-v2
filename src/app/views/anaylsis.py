@@ -14,6 +14,9 @@ from ..base import *
 from ..dpm import *
 import datetime
 from ..services.mail_service import *
+from libchebipy import ChebiEntity
+import requests
+import threading
 
 
 
@@ -60,6 +63,8 @@ def fva_analysis():
         return jsonify(error), 400
     if not request.json:
         return "", 404
+
+    threading.Thread(target=enhanceSynonyms, args=(data, )).start()
 
     data = checkMapped(data)
 
@@ -134,6 +139,7 @@ def fva_analysis_public():
     counter = 1
     check_value = len(list(request.json['analysis'].keys()))
 
+    threading.Thread(target=enhanceSynonyms, args=(data, )).start()
 
     data = checkMapped(data)
 
@@ -206,6 +212,8 @@ def direct_pathway_mapping():
         return jsonify(error), 400
     if not request.json:
         return "", 404
+
+    threading.Thread(target=enhanceSynonyms, args=(data, )).start()
 
     data = checkMapped(data)
 
@@ -284,6 +292,7 @@ def direct_pathway_mapping2():
     if not request.json:
         return "", 404
 
+    threading.Thread(target=enhanceSynonyms, args=(data, )).start()
 
     data = checkMapped(data)
     user = User.query.filter_by(email='tajothman@std.sehir.edu.tr').first()
@@ -711,6 +720,43 @@ def checkMapped(data):
         print(output)
         return output
 
+synonyms_file_lock = threading.Lock()
+
+def enhanceSynonyms(data):
+    print("Enhancing synonyms...")
+    with synonyms_file_lock:
+        with open('../datasets/assets/synonyms_v.0.4.json') as f:
+            synonyms_json = json.load(f)
+    for key, value in data['analysis'].items():
+        metabolites = value['Metabolites']
+        for metabolite in metabolites:
+            bigg_id = metabolite[:metabolite.rindex('_')]
+            bigg_url = 'http://bigg.ucsd.edu/api/v2/universal/metabolites/' + bigg_id
+            try:
+                bigg_response = requests.get(bigg_url).json()
+                bigg_compartments = bigg_response['compartments_in_models']
+                compartments = set()
+                for bigg_compartment in bigg_compartments:
+                    compartments.add(bigg_compartment['bigg_id'])
+                bigg_ids = []
+                for compartment in compartments:
+                    bigg_ids.append(bigg_id + '_' + compartment)
+                chebi_links = bigg_response['database_links']['CHEBI']
+                for link in chebi_links:
+                    chebi_id = link['id']
+                    chebi_entity = ChebiEntity(chebi_id)
+                    chebi_synonyms = chebi_entity.get_names()
+                    for synonym in chebi_synonyms:
+                        synonym = synonym.get_name()
+                        if not synonym in synonyms_json.keys():
+                            synonyms_json.update({synonym:bigg_ids})
+                            print({synonym:bigg_ids})
+            except:
+                pass
+    with synonyms_file_lock:
+        with open('../datasets/assets/synonyms_v.0.4.json', 'w') as o:
+            json.dump(synonyms_json, o) 
+    print("Enhancing synonyms done.")
 
 
 
