@@ -143,3 +143,4 @@ widgetsnbextension==3.5.1
 WTForms==2.2.1
 zipp==0.6.0
 sendgrid==6.1.2
+libChEBIpy==1.0.10
