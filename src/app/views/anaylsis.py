@@ -457,19 +457,20 @@ def analysis_details(type):
     returned_data = []
     for item in data:
         analyses = Analysis.query.filter_by(type='public', dataset_id=item.id).with_entities(
-            Analysis.id, Analysis.name, Analysis.dataset_id)
+            Analysis.id, Analysis.name, Analysis.dataset_id, Analysis.start_time, Analysis.end_time)
         method = Method.query.get(item.method_id)
+        disease = Disease.query.get(item.disease_id)
         if len(list(analyses)) > 0:
             analysis_data = []
             for analysis in analyses:
-                analysis_data.append({'id': analysis[0], 'name': analysis[1]})
+                analysis_data.append({'id': analysis[0], 'name': analysis[1], "start": analysis[3], "end": analysis[4]})
                 idss.append({'id':analysis[0]})
             returned_data.append({
                 'id': item.id,
                 'name': item.name,
                 'analyses': analysis_data,
                 'method': method.name,
-                'disease': 'Breast Cancer',
+                'disease': disease.name,
                 'id2':idss
             })
     # print(returned_data)
