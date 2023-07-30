@@ -106,6 +106,7 @@ def fva_analysis():
                 analysis.name = key
                 analysis.type = 'public' if request.json['public'] else "private"
                 analysis.start_time = datetime.datetime.now()
+                analysis.end_time = datetime.datetime.now()
 
 
                 analysis.owner_user_id = user.id
@@ -180,6 +181,7 @@ def fva_analysis_public():
                 analysis.name = key
                 analysis.type = 'public'
                 analysis.start_time = datetime.datetime.now()
+                analysis.end_time = datetime.datetime.now()
 
                 analysis.owner_user_id = user.id
                 analysis.owner_email = request.json["email"]
@@ -497,18 +499,19 @@ def user_analysis():
     if 'Authorization Required' not in str(current_identity.id):
         for item in data:
             analyses = Analysis.query.filter_by(owner_user_id=current_identity.id, type='private', dataset_id=item.id).with_entities(
-            Analysis.id, Analysis.name, Analysis.dataset_id)
+            Analysis.id, Analysis.name, Analysis.dataset_id, Analysis.start_time, Analysis.end_time)
             method = Method.query.get(item.method_id)
+            disease = Disease.query.get(item.disease_id)
             if len(list(analyses)) > 0:
                 analysis_data = []
                 for analysis in analyses:
-                    analysis_data.append({'id': analysis[0], 'name': analysis[1]})
+                    analysis_data.append({'id': analysis[0], 'name': analysis[1], 'start': analysis[3], 'end': analysis[4]})
                 returned_data.append({
                     'id': item.id,
                     'name': item.name,
                     'analyses': analysis_data,
                     'method': method.name,
-                    'disease': 'Breast Cancer'
+                    'disease': disease.name
                 })
 
     return jsonify(returned_data)
