@@ -166,7 +166,7 @@ class Analysis(db.Model):
     def authenticated(self):
         if self.type in ['private', 'noise']:
             _jwt_required(app.config['JWT_DEFAULT_REALM'])
-            return self.user_id == current_identity.id
+            return self.owner_user_id == current_identity.id
         return True
 
     @staticmethod
