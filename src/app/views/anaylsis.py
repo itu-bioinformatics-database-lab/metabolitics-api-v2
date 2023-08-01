@@ -106,7 +106,6 @@ def fva_analysis():
                 analysis.name = key
                 analysis.type = 'public' if request.json['public'] else "private"
                 analysis.start_time = datetime.datetime.now()
-                analysis.end_time = datetime.datetime.now()
 
 
                 analysis.owner_user_id = user.id
@@ -181,7 +180,6 @@ def fva_analysis_public():
                 analysis.name = key
                 analysis.type = 'public'
                 analysis.start_time = datetime.datetime.now()
-                analysis.end_time = datetime.datetime.now()
 
                 analysis.owner_user_id = user.id
                 analysis.owner_email = request.json["email"]
@@ -259,7 +257,6 @@ def direct_pathway_mapping():
                 # analysis.status = True
                 analysis.type = 'public' if request.json['public'] else "private"
                 analysis.start_time = datetime.datetime.now()
-                analysis.end_time = datetime.datetime.now()
 
                 analysis.owner_user_id = user.id
                 analysis.owner_email = user.email
@@ -271,6 +268,7 @@ def direct_pathway_mapping():
                 analysis_runs.run()  # Making the analysis
                 analysis.results_pathway = [analysis_runs.result_pathways]
                 analysis.results_reaction = [analysis_runs.result_reactions]
+                analysis.end_time = datetime.datetime.now()
 
                 db.session.add(analysis)
                 db.session.commit()
@@ -335,7 +333,6 @@ def direct_pathway_mapping2():
                 # analysis.status = True
                 analysis.type = 'public'
                 analysis.start_time = datetime.datetime.now()
-                analysis.end_time = datetime.datetime.now()
 
                 analysis.owner_user_id = user.id
                 analysis.owner_email = request.json["email"]
@@ -347,6 +344,7 @@ def direct_pathway_mapping2():
                 analysis_runs.run()  # Making the analysis
                 analysis.results_pathway = [analysis_runs.result_pathways]
                 analysis.results_reaction = [analysis_runs.result_reactions]
+                analysis.end_time = datetime.datetime.now()
 
                 db.session.add(analysis)
                 db.session.commit()
