@@ -56,6 +56,10 @@ Developing Metabolitics API inside a Docker container built from Dockerfile ensu
 
     `gunicorn --bind 0.0.0.0:5000 --workers=2 app:app --reload`
 
+19. To run **Celery**, run the below command under **src** directory
+
+    `celery -A app.celery worker`
+
 Visit following links for more information:
 
 `https://code.visualstudio.com/docs/devcontainers/containers`
