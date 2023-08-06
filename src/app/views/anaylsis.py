@@ -433,17 +433,24 @@ def most_similar_diseases(id: int):
         return '', 404
     if not analysis.authenticated():
         return '', 401
+    analysis_method_id = Dataset.query.get(analysis.dataset_id).method_id
 
-    row_disease_analyses = Analysis.query.filter_by(
-        type='public').with_entities(Analysis.name,
-                                      Analysis.results_pathway).all()
-
-    names, disease_analyses = zip(*[(i[0], i[1][0])
-                                    for i in row_disease_analyses])
-
-    sims = similarty_dict(analysis.results_pathway[0], list(disease_analyses))
-    top_5 = sorted(zip(names, sims), key=lambda x: x[1], reverse=True)[:5]
-    return jsonify(dict(top_5))
+    public_analyses = db.session.query(Analysis, Dataset, Disease).join(Dataset).join(Disease).filter(
+        Analysis.type == 'public').filter(Dataset.method_id == analysis_method_id).filter(
+            Analysis.id != analysis.id).with_entities(Disease.name, Analysis.results_pathway).all()
+    diseases = [i[0] for i in public_analyses]
+    results_pathways = [i[1][0] for i in public_analyses]
+    similarities = similarty_dict(analysis.results_pathway[0], results_pathways)
+    dis_sim = zip(diseases, similarities)
+    dis_sim_dict = {}
+    for i in dis_sim:
+        if i[0] not in dis_sim_dict:
+            dis_sim_dict[i[0]] = []
+        dis_sim_dict[i[0]].append(i[1])
+    for i in dis_sim_dict:
+        dis_sim_dict[i] = sum(dis_sim_dict[i]) / len(dis_sim_dict[i])
+    top_five = sorted(dis_sim_dict.items(), key=lambda x: x[1], reverse=True)[:5]
+    return jsonify(dict(top_five))
 
 
 @app.route('/analysis/<type>')
