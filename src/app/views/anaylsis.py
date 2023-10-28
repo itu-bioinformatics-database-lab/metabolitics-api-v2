@@ -14,6 +14,8 @@ from ..base import *
 from ..dpm import *
 import datetime
 from ..services.mail_service import *
+import os
+import pickle
 
 
 
@@ -100,6 +102,7 @@ def fva_analysis():
 
 
                 analysis = Analysis(name=key, user=user)
+                analysis.label = value['Label']
                 analysis.name = key
                 analysis.type = 'public' if request.json['public'] else "private"
                 analysis.start_time = datetime.datetime.now()
@@ -174,6 +177,7 @@ def fva_analysis_public():
                 db.session.commit()
 
                 analysis = Analysis(name=key, user=user)
+                analysis.label = value['Label']
                 analysis.name = key
                 analysis.type = 'public'
                 analysis.start_time = datetime.datetime.now()
@@ -452,6 +456,51 @@ def most_similar_diseases(id: int):
     top_five = sorted(dis_sim_dict.items(), key=lambda x: x[1], reverse=True)[:5]
     return jsonify(dict(top_five))
 
+@app.route('/analysis/most-similar-diseases-model/<id>')
+def most_similar_diseases_model(id: int):
+    """
+    Calculates most similar disease for given disease id using trained models
+    ---
+    tags:
+      - analysis
+    parameters:
+      -
+        name: authorization
+        in: header
+        type: string
+        required: true
+      -
+        name: id
+        in: path
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Most similar diseases
+      404:
+        description: Analysis not found
+      401:
+        description: Analysis is not yours
+    """
+    analysis = Analysis.query.get(id)
+    if not analysis:
+        return '', 404
+    if not analysis.authenticated():
+        return '', 401
+    metabolomics_data_id = analysis.metabolomics_data_id
+    metabolomics_data = MetabolomicsData.get(metabolomics_data_id).metabolomics_data
+    path = '../trained_models'
+    predictions = []
+    for f in os.listdir(path):
+        f = os.path.join(path, f)
+        if os.path.isfile(f):
+            saved = pickle.load(open(f, 'rb'))
+            disease = saved['disease']
+            model = saved['model']
+            score = saved['score']
+            prediction = model.predict(metabolomics_data)
+            predictions.append({'disease' : disease, 'prediction' : prediction, 'score': score})
+    return jsonify(predictions)
 
 @app.route('/analysis/<type>')
 def analysis_details(type):
@@ -698,7 +747,7 @@ def checkMapped(data):
             mapping_data1 = json.load(f)
             mapping_data1 = mapping_data1["metabolites"]
 
-        with open('../datasets/assets/synonyms_v.0.4.json') as f:
+        with open('../datasets/assets/synonyms.json') as f:
             mapping_data2 = json.load(f)
 
         for case in data['analysis'].keys():
