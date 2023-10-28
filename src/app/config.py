@@ -1,5 +1,6 @@
 import os
 import datetime
+from celery.schedules import crontab
 
 
 class BaseConfig:
@@ -25,6 +26,12 @@ class BaseConfig:
                                   'redis://localhost:6379')
     CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND',
                                       'redis://localhost:6379')
+    CELERYBEAT_SCHEDULE = {
+        'train_save_model': {
+            'task': 'train_save_model',
+            'schedule': crontab(minute=0, hour=0)
+        }
+    }
 
     try:
         SECRET_KEY = open('../secret.txt').read()
