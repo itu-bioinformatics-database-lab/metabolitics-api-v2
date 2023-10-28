@@ -50,7 +50,7 @@ def metabolc(data):
         mapping_data1= json.load(f)
         mapping_data1 = mapping_data1["metabolites"]
 
-    with open('../datasets/assets/synonyms_v.0.4.json') as f:
+    with open('../datasets/assets/synonyms.json') as f:
         mapping_data2= json.load(f)
 
 
@@ -64,16 +64,20 @@ def metabolc(data):
                 isMapped[data[k][0]] = {'isMapped':True}
 
             elif data[k][0] in mapping_data2.keys():
-                metabols.append(mapping_data2[data[k][0]])
-                isMapped[mapping_data2[data[k][0]]] = {'isMapped': True}
+                temp = mapping_data2[data[k][0]]
+                temp = temp[0] if type(temp) is list else temp
+                metabols.append(temp)
+                isMapped[temp] = {'isMapped': True}
 
             # elif data[k][0] in mapping_metabolites.keys():
             #     metabols.append(mapping_metabolites[data[k][0]])
             #     isMapped[mapping_metabolites[data[k][0]]] = {'isMapped': True}
 
             else:
-                metabols.append(data[k][0])
-                isMapped[data[k][0]] = {'isMapped':False}
+                temp = data[k][0]
+                temp = temp[0] if type(temp) is list else temp
+                metabols.append(temp)
+                isMapped[temp] = {'isMapped':False}
 
 
 
@@ -272,7 +276,7 @@ def mwlab_mapper():
             mapping_data1 = json.load(f)
             mapping_data1 = mapping_data1["metabolites"]
 
-        with open('../datasets/assets/synonyms_v.0.4.json') as f:
+        with open('../datasets/assets/synonyms.json') as f:
             mapping_data2 = json.load(f)
 
         local = mwtabReader(name)
