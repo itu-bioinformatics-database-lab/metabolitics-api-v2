@@ -456,10 +456,10 @@ def most_similar_diseases(id: int):
     top_five = sorted(dis_sim_dict.items(), key=lambda x: x[1], reverse=True)[:5]
     return jsonify(dict(top_five))
 
-@app.route('/analysis/most-similar-diseases-model/<id>')
-def most_similar_diseases_model(id: int):
+@app.route('/analysis/disease-prediction/<id>')
+def disease_prediction(id: int):
     """
-    Calculates most similar disease for given disease id using trained models
+    Disease prediction for given analysis id using trained models
     ---
     tags:
       - analysis
@@ -476,7 +476,7 @@ def most_similar_diseases_model(id: int):
         required: true
     responses:
       200:
-        description: Most similar diseases
+        description: Disease predictions
       404:
         description: Analysis not found
       401:
@@ -488,17 +488,19 @@ def most_similar_diseases_model(id: int):
     if not analysis.authenticated():
         return '', 401
     metabolomics_data_id = analysis.metabolomics_data_id
-    metabolomics_data = MetabolomicsData.get(metabolomics_data_id).metabolomics_data
-    path = '../trained_models'
+    metabolomics_data = MetabolomicsData.query.get(metabolomics_data_id).metabolomics_data
+    dir = '../trained_models'
     predictions = []
-    for f in os.listdir(path):
-        f = os.path.join(path, f)
-        if os.path.isfile(f):
-            saved = pickle.load(open(f, 'rb'))
+    for file in os.listdir(dir):
+        if file == '.keep':
+            continue
+        path = os.path.join(dir, file)
+        if os.path.isfile(path):
+            saved = pickle.load(open(path, 'rb'))
             disease = saved['disease']
             model = saved['model']
             score = saved['score']
-            prediction = model.predict(metabolomics_data)
+            prediction = model.predict(metabolomics_data)[0]
             predictions.append({'disease' : disease, 'prediction' : prediction, 'score': score})
     return jsonify(predictions)
 
