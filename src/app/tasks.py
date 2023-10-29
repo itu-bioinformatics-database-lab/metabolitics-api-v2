@@ -98,6 +98,11 @@ def train_save_model():
         y = [label[0] for label in labels]
         disease_id, = db.session.query(Dataset.disease_id).filter(Dataset.id == dataset_id).first()
         disease, = db.session.query(Disease.name).filter(Disease.id == disease_id).first()
+        group, = db.session.query(Dataset.group).filter(Dataset.id == dataset_id).first()
+        healthy = y.count(group)
+        patient = len(y) - healthy
+        if healthy < 20 or patient < 20:
+            continue
         try:
             pipe = Pipeline([
                 ('vect', DictVectorizer(sparse=False)),
