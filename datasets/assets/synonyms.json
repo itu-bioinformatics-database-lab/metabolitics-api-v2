@@ -172650,5 +172650,2216 @@
         "orn_e",
         "orn_c",
         "orn_m"
+    ],
+    "Sarcosine": [
+        "sarcs_m",
+        "sarcs_c",
+        "sarcs_x",
+        "sarcs_e"
+    ],
+    "N-Methylglycine": [
+        "sarcs_m",
+        "sarcs_c",
+        "sarcs_x",
+        "sarcs_e"
+    ],
+    "Sar": [
+        "sarcs_m",
+        "sarcs_c",
+        "sarcs_x",
+        "sarcs_e"
+    ],
+    "N-methylaminoacetic acid": [
+        "sarcs_m",
+        "sarcs_c",
+        "sarcs_x",
+        "sarcs_e"
+    ],
+    "SARCOSINE": [
+        "sarcs_m",
+        "sarcs_c",
+        "sarcs_x",
+        "sarcs_e"
+    ],
+    "MeGly": [
+        "sarcs_m",
+        "sarcs_c",
+        "sarcs_x",
+        "sarcs_e"
+    ],
+    "L-sarcosine": [
+        "sarcs_m",
+        "sarcs_c",
+        "sarcs_x",
+        "sarcs_e"
+    ],
+    "carboxy-N-methylmethanaminium": [
+        "sarcs_m",
+        "sarcs_c",
+        "sarcs_x",
+        "sarcs_e"
+    ],
+    "(Z)-But-2-ene-1,2,3-tricarboxylate": [
+        "2mcacn_c"
+    ],
+    "cis-2-Methylaconitate": [
+        "2mcacn_c"
+    ],
+    "(2Z)-but-2-ene-1,2,3-tricarboxylic acid": [
+        "2mcacn_c"
+    ],
+    "(Z)-but-2-ene-1,2,3-tricarboxylate": [
+        "2mcacn_c"
+    ],
+    "alpha-Methylaconitate": [
+        "2mcacn_c"
+    ],
+    "alpha-Methyl-cis-aconitate": [
+        "2mcacn_c"
+    ],
+    "cis-2-Butene-1,2,3-tricarboxylic acid": [
+        "2mcacn_c"
+    ],
+    "(1Z)-1-methylprop-1-ene-1,2,3-tricarboxylate": [
+        "2mcacn_c"
+    ],
+    "(2Z)-but-2-ene-1,2,3-tricarboxylate": [
+        "2mcacn_c"
+    ],
+    "cis-2-Hydroxy cinnamate": [
+        "2coum_c"
+    ],
+    "2-Coumarinate": [
+        "2coum_c"
+    ],
+    "(2Z)-3-(2-hydroxyphenyl)acrylic acid": [
+        "2coum_c"
+    ],
+    "(2Z)-3-(2-hydroxyphenyl)prop-2-enoic acid": [
+        "2coum_c"
+    ],
+    "(2Z)-3-(2-hydroxyphenyl)prop-2-enoate": [
+        "2coum_c"
+    ],
+    "(2Z)-3-(2-hydroxyphenyl)acrylate": [
+        "2coum_c"
+    ],
+    "trans-4-hydroxy-D-proline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "4alpha-hydroxy-D-proline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "(4S)-4-hydroxy-D-proline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "(2R,4S)-4-hydroxypyrrolidine-2-carboxylic acid": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "H-D-Hyp-OH": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "trans-4-Hydroxy-L-proline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "trans-4-hydroxy-L-proline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "(2S,4R)-4-hydroxy-2-pyrrolidinecarboxylic acid": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "L-threo-4-hydroxyproline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "(4R)-4-hydroxy-L-proline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "Hydroxyproline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "L-4-Hydroxyproline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "Hypro": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "(2S,4R)-trans-4-hydroxyproline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "Hydroxy-L-proline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "trans-L-Hydroxyproline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "trans-Hydroxyproline": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "Hyp": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "4Hyp": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "(2S,4R)-4-hydroxypyrrolidinium-2-carboxylate": [
+        "4hpro_LT_m",
+        "4hpro_LT_e",
+        "4hpro_LT_c",
+        "4hpro_LT_r"
+    ],
+    "Glycerone phosphate": [
+        "dhap_x",
+        "dhap_m",
+        "dhap_e",
+        "dhap_c"
+    ],
+    "Dihydroxyacetone phosphate": [
+        "dhap_x",
+        "dhap_m",
+        "dhap_e",
+        "dhap_c"
+    ],
+    "2-Propanone, 1-hydroxy-3-(phosphonooxy)-": [
+        "dhap_x",
+        "dhap_m",
+        "dhap_e",
+        "dhap_c"
+    ],
+    "1,3-Dihydroxy-2-propanone monodihydrogen phosphate": [
+        "dhap_x",
+        "dhap_m",
+        "dhap_e",
+        "dhap_c"
+    ],
+    "DHAP": [
+        "dhap_x",
+        "dhap_m",
+        "dhap_e",
+        "dhap_c"
+    ],
+    "1,3-Dihydroxy-2-propanone phosphate": [
+        "dhap_x",
+        "dhap_m",
+        "dhap_e",
+        "dhap_c"
+    ],
+    "1,3-Dihydroxyacetone 1-phosphate": [
+        "dhap_x",
+        "dhap_m",
+        "dhap_e",
+        "dhap_c"
+    ],
+    "Dihydroxyacetone monophosphate": [
+        "dhap_x",
+        "dhap_m",
+        "dhap_e",
+        "dhap_c"
+    ],
+    "1-hydroxy-3-(phosphonooxy)-2-Propanone": [
+        "dhap_x",
+        "dhap_m",
+        "dhap_e",
+        "dhap_c"
+    ],
+    "Nicotinic acid": [
+        "nac_c",
+        "nac_e"
+    ],
+    "Niacin": [
+        "nac_c",
+        "nac_e"
+    ],
+    "Nicotinsaure": [
+        "nac_c",
+        "nac_e"
+    ],
+    "P.P. factor": [
+        "nac_c",
+        "nac_e"
+    ],
+    "PP factor": [
+        "nac_c",
+        "nac_e"
+    ],
+    "Nikotinsaeure": [
+        "nac_c",
+        "nac_e"
+    ],
+    "NICOTINIC ACID": [
+        "nac_c",
+        "nac_e"
+    ],
+    "vitamin B3": [
+        "nac_c",
+        "nac_e"
+    ],
+    "3-Pyridylcarboxylic acid": [
+        "nac_c",
+        "nac_e"
+    ],
+    "Niacor": [
+        "nac_c",
+        "nac_e"
+    ],
+    "pyridine-carboxylique-3": [
+        "nac_c",
+        "nac_e"
+    ],
+    "Niaspan": [
+        "nac_c",
+        "nac_e"
+    ],
+    "Aminoacetone": [
+        "aact_m",
+        "aact_c"
+    ],
+    "1-Amino-2-propanone": [
+        "aact_m",
+        "aact_c"
+    ],
+    "1-AMINO-PROPAN-2-ONE": [
+        "aact_m",
+        "aact_c"
+    ],
+    "Anthranilic acid": [
+        "anth_c",
+        "anth_e"
+    ],
+    "o-Aminobenzoic acid": [
+        "anth_c",
+        "anth_e"
+    ],
+    "Vitamin L1": [
+        "anth_c",
+        "anth_e"
+    ],
+    "2-AMINOBENZOIC ACID": [
+        "anth_c",
+        "anth_e"
+    ],
+    "o-Aminobenzoesaeure": [
+        "anth_c",
+        "anth_e"
+    ],
+    "2-Aminobenzoesaeure": [
+        "anth_c",
+        "anth_e"
+    ],
+    "Creatinine": [
+        "creat_m",
+        "creat_c",
+        "creat_e"
+    ],
+    "1-Methylglycocyamidine": [
+        "creat_m",
+        "creat_c",
+        "creat_e"
+    ],
+    "Kreatinin": [
+        "creat_m",
+        "creat_c",
+        "creat_e"
+    ],
+    "1-Methylhydantoin-2-imide": [
+        "creat_m",
+        "creat_c",
+        "creat_e"
+    ],
+    "2-amino-1,5-dihydro-1-methyl-4H-Imidazol-4-one": [
+        "creat_m",
+        "creat_c",
+        "creat_e"
+    ],
+    "Creatine anhydride": [
+        "creat_m",
+        "creat_c",
+        "creat_e"
+    ],
+    "2-Amino-1-methylimidazolin-4-one": [
+        "creat_m",
+        "creat_c",
+        "creat_e"
+    ],
+    "Butyryl-L-carnitine": [
+        "c4crn_m",
+        "c4crn_c",
+        "c4crn_x",
+        "c4crn_e"
+    ],
+    "n-Butyryl-L-(-)-carnitin": [
+        "c4crn_m",
+        "c4crn_c",
+        "c4crn_x",
+        "c4crn_e"
+    ],
+    "Butyrylcarnitine": [
+        "c4crn_m",
+        "c4crn_c",
+        "c4crn_x",
+        "c4crn_e"
+    ],
+    "L-Carnitine butyryl ester": [
+        "c4crn_m",
+        "c4crn_c",
+        "c4crn_x",
+        "c4crn_e"
+    ],
+    "(3R)-3-(butyryloxy)-4-(trimethylazaniumyl)butanoate": [
+        "c4crn_m",
+        "c4crn_c",
+        "c4crn_x",
+        "c4crn_e"
+    ],
+    "(3R)-3-(butyryloxy)-4-(trimethylammonio)butanoate": [
+        "c4crn_m",
+        "c4crn_c",
+        "c4crn_x",
+        "c4crn_e"
+    ],
+    "O-butanoyl-(R)-carnitine": [
+        "c4crn_m",
+        "c4crn_c",
+        "c4crn_x",
+        "c4crn_e"
+    ],
+    "O-butyrylcarnitine": [
+        "c4crn_m",
+        "c4crn_c",
+        "c4crn_x",
+        "c4crn_e"
+    ],
+    "(Z)-ethene-1,2-diol": [
+        "gcald_m",
+        "gcald_c"
+    ],
+    "cis-1,2-Ethenediol": [
+        "gcald_m",
+        "gcald_c"
+    ],
+    "Glycolaldehyde": [
+        "gcald_m",
+        "gcald_c"
+    ],
+    "Hydroxyacetaldehyde": [
+        "gcald_m",
+        "gcald_c"
+    ],
+    "GLYCOALDEHYDE": [
+        "gcald_m",
+        "gcald_c"
+    ],
+    "Monomethylolformaldehyde": [
+        "gcald_m",
+        "gcald_c"
+    ],
+    "Methylol formaldehyde": [
+        "gcald_m",
+        "gcald_c"
+    ],
+    "Glycolic aldehyde": [
+        "gcald_m",
+        "gcald_c"
+    ],
+    "vitamin B1": [
+        "thm_m",
+        "thm_c",
+        "thm_e"
+    ],
+    "Thiamin": [
+        "thm_m",
+        "thm_c",
+        "thm_e"
+    ],
+    "thiamine chloride": [
+        "thm_m",
+        "thm_c",
+        "thm_e"
+    ],
+    "Isopentenyl diphosphate": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "delta3-Isopentenyl diphosphate": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "delta3-Methyl-3-butenyl diphosphate": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "Isopentenyl pyrophosphate": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "Diphosphoric acid mono(3-methyl-3-butenyl) ester": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "delta-3-Isopentenyl pyrophosphate": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "3-Methyl-3-butenyl pyrophosphate": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "Mono(3-methyl-3-butenyl) diphosphate": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "IPPP": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "IPP": [
+        "ipdp_c",
+        "ipdp_r",
+        "ipdp_x"
+    ],
+    "Glyoxylat": [
+        "glx_m",
+        "glx_c",
+        "glx_x"
+    ],
+    "Glyoxylate": [
+        "glx_m",
+        "glx_c",
+        "glx_x"
+    ],
+    "Glyoxalate": [
+        "glx_m",
+        "glx_c",
+        "glx_x"
+    ],
+    "Glyoxylic acid": [
+        "glx_m",
+        "glx_c",
+        "glx_x"
+    ],
+    "Glyoxylsaeure": [
+        "glx_m",
+        "glx_c",
+        "glx_x"
+    ],
+    "Glyoxalsaeure": [
+        "glx_m",
+        "glx_c",
+        "glx_x"
+    ],
+    "GLYOXYLIC ACID": [
+        "glx_m",
+        "glx_c",
+        "glx_x"
+    ],
+    "(2S)-2-aminobutanoate": [
+        "C02356_c"
+    ],
+    "(S)-2-Aminobutanoate": [
+        "C02356_c"
+    ],
+    "(S)-2-Aminobutanoic acid": [
+        "C02356_c"
+    ],
+    "(S)-2-Aminobutyric acid": [
+        "C02356_c"
+    ],
+    "(2S)-2-aminobutanoic acid": [
+        "C02356_c"
+    ],
+    "L-alpha-aminobutyric acid": [
+        "C02356_c"
+    ],
+    "L-alpha-amino-n-butyric acid": [
+        "C02356_c"
+    ],
+    "L-2-aminobutyric acid": [
+        "C02356_c"
+    ],
+    "L-butyrine": [
+        "C02356_c"
+    ],
+    "L-2-Aminobuttersaeure": [
+        "C02356_c"
+    ],
+    "L-(+)-2-aminobutyric acid": [
+        "C02356_c"
+    ],
+    "(2S)-2-aminobutyric acid": [
+        "C02356_c"
+    ],
+    "S-Butyrine": [
+        "C02356_c"
+    ],
+    "(2S)-2-azaniumylbutanoate": [
+        "C02356_c"
+    ],
+    "(2S)-2-ammoniobutyrate": [
+        "C02356_c"
+    ],
+    "(2S)-2-ammoniobutanoate": [
+        "C02356_c"
+    ],
+    "O-tetradecanoyl-(R)-carnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "myristoyl-L-carnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "tetradecanoyl-L-carnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "(-)-Myristoylcarnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "(-)-Tetradecanoylcarnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "(R)-Tetradecanoylcarnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "L-Myristoylcarnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "Myristoyl-L-(-)-carnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "Myristoylcarnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "(3R)-3-(tetradecanoyloxy)-4-(trimethylazaniumyl)butanoate": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "(R)-myristoylcarnitine": [
+        "ttdcrn_m",
+        "ttdcrn_c",
+        "ttdcrn_e"
+    ],
+    "Dehydroascorbate": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "Dehydroascorbic acid": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "5-(1,2-dihydroxyethyl)furan-2,3,4(5H)-trione": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "L-Dehydroascorbate": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "L-Dehydroascorbic acid": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "(5R)-5-[(1S)-1,2-dihydroxyethyl]furan-2,3,4(5H)-trione": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "DHAA": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "dehydro-L-ascorbic acid": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "oxidized vitamin C": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "L-threo-hexo-2,3-diulosono-1,4-lactone": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "L-threo-2,3-hexodiulosonic acid, gamma-lactone": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "L-dehydroascorbate": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "2-[(1S)-1,2-dihydroxyethyl]-3,4,5-trioxotetrahydrofuran-2-ide": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "dehydro-L-ascorbate": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "L-dehydroascorbic acid(1-)": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "L-dehydroascorbate anion": [
+        "dhdascb_c",
+        "dhdascb_e"
+    ],
+    "O-Acetylcarnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "O-Acetyl-L-carnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "(2R)-2-(acetyloxy)-3-carboxy-N,N,N-trimethylpropan-1-aminium": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "O-acetyl-(R)-carnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "(3R)-3-(acetyloxy)-4-(trimethylazaniumyl)butanoate": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "Acetyl-L-carnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "(R)-Acetylcarnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "Acetyl-L-(-)-carnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "L-Carnitine acetyl ester": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "L-Acetylcarnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "(-)-Acetylcarnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "L-O-Acetylcarnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "R-Acetylcarnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "Acetyl-DL-carnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "DL-O-Acetylcarnitine": [
+        "acrn_m",
+        "acrn_c",
+        "acrn_r",
+        "acrn_x"
+    ],
+    "Hordenine": [
+        "C06199_g",
+        "C06199_c",
+        "C06199_l"
+    ],
+    "4-[2-(Dimethylamino)ethyl]phenol": [
+        "C06199_g",
+        "C06199_c",
+        "C06199_l"
+    ],
+    "p-(2-Dimethylaminoethyl)phenol": [
+        "C06199_g",
+        "C06199_c",
+        "C06199_l"
+    ],
+    "N,N-Dimethyl-2-(4-hydroxyphenyl)ethylamine": [
+        "C06199_g",
+        "C06199_c",
+        "C06199_l"
+    ],
+    "N,N-Dimethyl-4-hydroxy-beta-phenethylamine": [
+        "C06199_g",
+        "C06199_c",
+        "C06199_l"
+    ],
+    "N,N-Dimethyltyramine": [
+        "C06199_g",
+        "C06199_c",
+        "C06199_l"
+    ],
+    "Xylitol": [
+        "xylt_c",
+        "xylt_e"
+    ],
+    "Xylit": [
+        "xylt_c",
+        "xylt_e"
+    ],
+    "D-XYLITOL": [
+        "xylt_c",
+        "xylt_e"
+    ],
+    "(2R,3R,4S)-Pentane-1,2,3,4,5-pentaol": [
+        "xylt_c",
+        "xylt_e"
+    ],
+    "L-xylitol": [
+        "xylt_c",
+        "xylt_e"
+    ],
+    "(2R,3r,4S)-pentane-1,2,3,4,5-pentol": [
+        "xylt_c",
+        "xylt_e"
+    ],
+    "Imidazole-4-acetate": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "Imidazoleacetic acid": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "4-Imidazoleacetate": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "1H-imidazol-4-ylacetic acid": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "1H-Imidazole-4-acetic acid": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "4(5)-Imidazoleacetate": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "2-(2H-imidazol-4-yl)ethanoic acid": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "2H-imidazol-4-ylacetic acid": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "1H-imidazol-5-ylacetic acid": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "2-(1H-imidazole-5-yl)acetic acid": [
+        "im4ac_m",
+        "im4ac_c"
+    ],
+    "Allysine": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "2-Aminoadipate 6-semialdehyde": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "HCO-[CH2]3-CH(NH2)-COOH": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "L-2-Aminoadipate 6-semialdehyde": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "L-6-oxonorleucine": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "(2S)-2-amino-6-oxohexanoic acid": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "6-oxo-L-norleucine": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "L-allysine": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "2-AMINO-6-OXO-HEXANOIC ACID": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "L-Allysine": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "(S)-2-Amino-6-oxohexanoate": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "(S)-2-amino-6-oxohexanoate": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "(2S)-2-ammonio-6-oxohexanoate": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "(2S)-2-azaniumyl-6-oxohexanoate": [
+        "L2aadp6sa_m",
+        "L2aadp6sa_c"
+    ],
+    "5-Phosphoribosylamine": [
+        "pram_c"
+    ],
+    "5-Phospho-beta-D-ribosylamine": [
+        "pram_c"
+    ],
+    "5-Phospho-D-ribosylamine": [
+        "pram_c"
+    ],
+    "5-Phosphoribosyl-1-amine": [
+        "pram_c"
+    ],
+    "5-O-phosphono-beta-D-ribofuranosylamine": [
+        "pram_c"
+    ],
+    "5-phospho-beta-D-ribosylamine": [
+        "pram_c"
+    ],
+    "5-O-phosphonato-beta-D-ribofuranosylaminium": [
+        "pram_c"
+    ],
+    "4-Hydroxy-2-oxoglutaric acid": [
+        "4h2oglt_m",
+        "4h2oglt_c"
+    ],
+    "(3R)-3-[(3-methylbutanoyl)oxy]-4-(trimethylazaniumyl)butanoate": [
+        "ivcrn_c",
+        "ivcrn_e"
+    ],
+    "O-3-methylbutanoyl-(R)-carnitine": [
+        "ivcrn_c",
+        "ivcrn_e"
+    ],
+    "3-Hydroxy-2-methylpropanoate": [
+        "3hmp_m"
+    ],
+    "3-Hydroxyisobutyrate": [
+        "3hmp_m"
+    ],
+    "3-Hydroxyisobutyric acid": [
+        "3hmp_m"
+    ],
+    "HIBA": [
+        "3hmp_m"
+    ],
+    "6-O-phosphono-D-gluconate": [
+        "6pgc_c",
+        "6pgc_r"
+    ],
+    "6-Phospho-D-gluconate": [
+        "6pgc_c",
+        "6pgc_r"
+    ],
+    "6-O-phosphono-D-gluconic acid": [
+        "6pgc_c",
+        "6pgc_r"
+    ],
+    "6-phospho-D-gluconate": [
+        "6pgc_c",
+        "6pgc_r"
+    ],
+    "6-O-phosphonato-D-gluconate": [
+        "6pgc_c",
+        "6pgc_r"
+    ],
+    "D-Glyceraldehyde": [
+        "glyald_m",
+        "glyald_c"
+    ],
+    "(2R)-2,3-dihydroxypropanal": [
+        "glyald_m",
+        "glyald_c"
+    ],
+    "D-2,3-dihydroxypropanal": [
+        "glyald_m",
+        "glyald_c"
+    ],
+    "D-2,3-dihydroxypropionaldehyde": [
+        "glyald_m",
+        "glyald_c"
+    ],
+    "D-aldotriose": [
+        "glyald_m",
+        "glyald_c"
+    ],
+    "D-glycerose": [
+        "glyald_m",
+        "glyald_c"
+    ],
+    "D-(+)-glyceraldehyde": [
+        "glyald_m",
+        "glyald_c"
+    ],
+    "GLYCERALDEHYDE": [
+        "glyald_m",
+        "glyald_c"
+    ],
+    "D-glyceraldehyde": [
+        "glyald_m",
+        "glyald_c"
+    ],
+    "L-Cystine": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "L-Dicysteine": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "L-alpha-Diamino-beta-dithiolactic acid": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "(R,R)-3,3'-dithiobis(2-aminopropanoic acid)": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "(2R,2'R)-3,3'-disulfanediylbis(2-aminopropanoic acid)": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "L-cystine": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "(R-(R*,R*))-3,3'-Dithiobis(2-aminopropanoic acid)": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "3,3'-Dithiobis-L-alanine": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "beta,beta'-diamino-beta,beta'-dicarboxydiethyl disulfide": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "beta,beta'-dithiodialanine": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "bis(beta-amino-beta-carboxyethyl) disulfide": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "oxidized L-cysteine": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "E921": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "(2R,2'R)-3,3'-dithiobis(2-ammoniopropanoate)": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "(2R,2'R)-3,3'-disulfanediylbis(2-ammoniopropanoate)": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "L-cystine dianion": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "(2R,2'R)-3,3'-disulfanediylbis(2-aminopropanoate)": [
+        "Lcystin_c",
+        "Lcystin_e"
+    ],
+    "Procollagen 5-hydroxy-L-lysine": [
+        "pcollg5hlys_c"
+    ],
+    "Procollagen L-erythro-5-hydroxy-L-lysine": [
+        "pcollg5hlys_c"
+    ],
+    "(2S,5R)- 5-hydroxy-L-lysine-[procollagen]": [
+        "pcollg5hlys_c"
+    ],
+    "procollagen 5-hydroxy-L-lysine": [
+        "pcollg5hlys_c"
+    ],
+    "Procollagen L-erythro-5-hydroxylysine": [
+        "pcollg5hlys_c"
+    ],
+    "(S)-3-methyl-2-oxopentanoate": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(3S)-3-methyl-2-oxopentanoate": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(3S)-3-Methyl-2-oxopentanoate": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(S)-3-methyl-2-oxovalerate": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(3S)-3-methyl-2-oxopentanoic acid": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(S)-3-methyl-2-oxovaleric acid": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(3S)-3-Methyl-2-oxopentanoic acid": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(S)-3-Methyl-2-oxopentanoic acid": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(S)-2-oxo-3-methylpentanoic acid": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(3S)-2-oxo-3-methyl-n-valeric acid": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(S)-OMV": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "(S)-3-Methyl-2-oxopentanoate": [
+        "3mop_m",
+        "3mop_c",
+        "3mop_e"
+    ],
+    "Oxoglutaric acid": [
+        "akg_x",
+        "akg_m",
+        "akg_e",
+        "akg_c",
+        "akg_r"
+    ],
+    "2-Ketoglutaric acid": [
+        "akg_x",
+        "akg_m",
+        "akg_e",
+        "akg_c",
+        "akg_r"
+    ],
+    "alpha-Ketoglutaric acid": [
+        "akg_x",
+        "akg_m",
+        "akg_e",
+        "akg_c",
+        "akg_r"
+    ],
+    "L-Pipecolate": [
+        "Lpipecol_x"
+    ],
+    "(2S)-piperidine-2-carboxylate": [
+        "Lpipecol_x"
+    ],
+    "(S)-pipecolate": [
+        "Lpipecol_x"
+    ],
+    "Pipecolinic acid": [
+        "Lpipecol_x"
+    ],
+    "Pipecolic acid": [
+        "Lpipecol_x"
+    ],
+    "2-Piperidinecarboxylic acid": [
+        "Lpipecol_x"
+    ],
+    "(S)-piperidine-2-carboxylic acid": [
+        "Lpipecol_x"
+    ],
+    "(S)-(-)-pipecolic acid": [
+        "Lpipecol_x"
+    ],
+    "L-(-)-pipecolic acid": [
+        "Lpipecol_x"
+    ],
+    "(S)-pipecolic acid": [
+        "Lpipecol_x"
+    ],
+    "(2S)-piperidine-2-carboxylic acid": [
+        "Lpipecol_x"
+    ],
+    "(S)-2-carboxypiperidinium betaine": [
+        "Lpipecol_x"
+    ],
+    "(2S)-piperidinium-2-carboxylate": [
+        "Lpipecol_x"
+    ],
+    "L-pipecolate": [
+        "Lpipecol_x"
+    ],
+    "(2R)-2-Hydroxy-3-(phosphonooxy)-propanal": [
+        "g3p_c"
+    ],
+    "D-Glyceraldehyde 3-phosphate": [
+        "g3p_c"
+    ],
+    "(2R)-2-hydroxy-3-oxopropyl dihydrogen phosphate": [
+        "g3p_c"
+    ],
+    "Glyceraldehyde 3-phosphate": [
+        "g3p_c"
+    ],
+    "Glycerinaldehyd-3-phosphat": [
+        "g3p_c"
+    ],
+    "Glyzerinaldehyd-3-phosphat": [
+        "g3p_c"
+    ],
+    "DL-Glyceraldehyde 3-phosphate": [
+        "g3p_c"
+    ],
+    "GAP": [
+        "g3p_c"
+    ],
+    "D-glyceraldehyde 3-phosphate dianion": [
+        "g3p_c"
+    ],
+    "(2R)-2-hydroxy-3-oxopropyl phosphate": [
+        "g3p_c"
+    ],
+    "D-glyceraldehyde 3-phosphate": [
+        "g3p_c"
+    ],
+    "Oxalacetic acid": [
+        "oaa_x",
+        "oaa_m",
+        "oaa_c"
+    ],
+    "Oxaloacetic acid": [
+        "oaa_x",
+        "oaa_m",
+        "oaa_c"
+    ],
+    "Oxosuccinic acid": [
+        "oaa_x",
+        "oaa_m",
+        "oaa_c"
+    ],
+    "2-Oxobutanedioic acid": [
+        "oaa_x",
+        "oaa_m",
+        "oaa_c"
+    ],
+    "OAA": [
+        "oaa_x",
+        "oaa_m",
+        "oaa_c"
+    ],
+    "D-glucose 6-(dihydrogen phosphate)": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "6-O-phosphono-D-glucose": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "D-Glucose 6-phosphate": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "Robison ester": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "D-glucopyranose 6-(dihydrogen phosphate)": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "6-O-phosphono-D-glucopyranose": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "Glc6P": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "D-glucose 6-phosphate": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "D-glucopyranose 6-phosphate dianion": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "6-O-phosphonato-D-glucopyranose": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "D-glucopyranose 6-phosphate": [
+        "g6p_c",
+        "g6p_r"
+    ],
+    "2-(5-methoxy-1H-indol-3-yl)ethan-1-ol": [
+        "CE6205_c"
+    ],
+    "Methoxytryptophol": [
+        "CE6205_c"
+    ],
+    "5-Methoxy-1H-indole-3-ethanol": [
+        "CE6205_c"
+    ],
+    "5-Methoxyindole-3-ethanol": [
+        "CE6205_c"
+    ],
+    "Bilirubin": [
+        "bilirub_c",
+        "bilirub_r",
+        "bilirub_e"
+    ],
+    "2,17-diethenyl-1,10,19,22,23,24-hexahydro-3,7,13,18-tetramethyl-1,19-dioxo-21H-biline-8,12-dipropanoic acid": [
+        "bilirub_c",
+        "bilirub_r",
+        "bilirub_e"
+    ],
+    "bilirubin-IXalpha": [
+        "bilirub_c",
+        "bilirub_r",
+        "bilirub_e"
+    ],
+    "2,7,13,17-tetramethyl-1,19-dioxo-3,18-divinyl-1,10,19,22,23,24-hexahydro-21H-biline-8,12-dipropanoic acid": [
+        "bilirub_c",
+        "bilirub_r",
+        "bilirub_e"
+    ],
+    "8,12-bis(2-carboxyethyl)-2,7,13,17-tetramethyl-3,18-divinylbiladiene-ac-1,19(21H,24H)-dione": [
+        "bilirub_c",
+        "bilirub_r",
+        "bilirub_e"
+    ],
+    "bilirubin(Z,Z)": [
+        "bilirub_c",
+        "bilirub_r",
+        "bilirub_e"
+    ],
+    "3,18-diethenyl-2,7,13,17-tetramethyl-1,19-dioxo-1,10,19,22,23,24-hexahydro-21H-biline-8,12-dipropanoic acid": [
+        "bilirub_c",
+        "bilirub_r",
+        "bilirub_e"
+    ],
+    "bilirubin IXalpha": [
+        "bilirub_c",
+        "bilirub_r",
+        "bilirub_e"
+    ],
+    "2,7,13,17-tetramethyl-1,19-dioxo-3,18-divinyl-1,10,19,22,23,24-hexahydro-21H-biline-8,12-dipropanoate": [
+        "bilirub_c",
+        "bilirub_r",
+        "bilirub_e"
+    ],
+    "Deoxycholic acid": [
+        "dchac_c",
+        "dchac_r",
+        "dchac_e"
+    ],
+    "3alpha,12alpha-Dihydroxy-5beta-cholanic acid": [
+        "dchac_c",
+        "dchac_r",
+        "dchac_e"
+    ],
+    "Desoxycholsaeure": [
+        "dchac_c",
+        "dchac_r",
+        "dchac_e"
+    ],
+    "(3ALPHA,5ALPHA,12ALPHA)-3,12-DIHYDROXYCHOLAN-24-OIC ACID": [
+        "dchac_c",
+        "dchac_r",
+        "dchac_e"
+    ],
+    "Desoxycholat": [
+        "dchac_c",
+        "dchac_r",
+        "dchac_e"
+    ],
+    "Hypoxanthine": [
+        "hxan_c",
+        "hxan_l",
+        "hxan_x",
+        "hxan_e"
+    ],
+    "Purine-6-ol": [
+        "hxan_c",
+        "hxan_l",
+        "hxan_x",
+        "hxan_e"
+    ],
+    "HYPOXANTHINE": [
+        "hxan_c",
+        "hxan_l",
+        "hxan_x",
+        "hxan_e"
+    ],
+    "1,7-dihydro-6H-purin-6-one": [
+        "hxan_c",
+        "hxan_l",
+        "hxan_x",
+        "hxan_e"
+    ],
+    "9H-purin-6(1H)-one": [
+        "hxan_c",
+        "hxan_l",
+        "hxan_x",
+        "hxan_e"
+    ],
+    "6(1H)-purinone": [
+        "hxan_c",
+        "hxan_l",
+        "hxan_x",
+        "hxan_e"
+    ],
+    "purin-6(1H)-one": [
+        "hxan_c",
+        "hxan_l",
+        "hxan_x",
+        "hxan_e"
+    ],
+    "5-acetamido-3,5-dideoxy-D-galacto-non-2-ulopyranosonate": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "N-acetylneuraminate": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "N-Acetylneuraminic acid": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "5-Acetamido-3,5-dideoxy-D-glycero-D-galacto-2-nonulosonic acid": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "Neu5Ac": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "5-acetamido-3,5-dideoxy-D-glycero-D-galacto-non-2-ulopyranosonic acid": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "Aceneuramic acid": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "NeuAc": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "O-sialic acid": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "WURCS=2.0/1,1,0/[Aad21122h-2x_2-6_5*NCC/3=O]/1/": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "5-N-ACETYL-BETA-D-NEURAMINIC ACID": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "5-acetamido-3,5-dideoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonic acid": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "beta-Neu5Ac": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "WURCS=2.0/1,1,0/[Aad21122h-2b_2-6_5*NCC/3=O]/1/": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "5-(acetylamino)-3,5-dideoxy-D-glycero-beta-D-galacto-2-nonulopyranosonic acid": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "N-acetyl-beta-neuraminate": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "5-acetamido-3,5-dideoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate": [
+        "acnam_c",
+        "acnam_l",
+        "acnam_n"
+    ],
+    "Phenylacetic acid": [
+        "pac_m",
+        "pac_c"
+    ],
+    "Benzylformic acid": [
+        "pac_m",
+        "pac_c"
+    ],
+    "2-PHENYLACETIC ACID": [
+        "pac_m",
+        "pac_c"
+    ],
+    "2-Phenylethanoic acid": [
+        "pac_m",
+        "pac_c"
+    ],
+    "PA": [
+        "pac_m",
+        "pac_c"
+    ],
+    "Omega-Phenylacetic acid": [
+        "pac_m",
+        "pac_c"
+    ],
+    "Benzeneacetic acid": [
+        "pac_m",
+        "pac_c"
+    ],
+    "Phenyl acetate": [
+        "pac_m",
+        "pac_c"
+    ],
+    "Acetylphenol": [
+        "pac_m",
+        "pac_c"
+    ],
+    "Acetic acid,phenyl ester": [
+        "pac_m",
+        "pac_c"
+    ],
+    "Phenol acetate": [
+        "pac_m",
+        "pac_c"
+    ],
+    "D,L-carnitine": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "L-Carnitine": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "Vitamin BT": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "(R)-carnitine": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "(3R)-3-hydroxy-4-(trimethylammonio)butanoate": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "Levocarnitine": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "(-)-Carnitine": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "(-)-L-Carnitine": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "Carnitine": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "(R)-Carnitine": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "Carnicor": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "Carnitor": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "Carnitene": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "3-Carboxy-2-hydroxy-N,N,N-trimethyl-1-propanaminium hydroxide, inner salt": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "3-carboxy-2-hydroxy-N,N,N-trimethylpropan-1-aminium": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "CARNITINE": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "(2R)-3-carboxy-2-hydroxy-N,N,N-trimethylpropan-1-aminium": [
+        "crn_x",
+        "crn_m",
+        "crn_e",
+        "crn_c",
+        "crn_r"
+    ],
+    "Choline": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "Bilineurine": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "2-hydroxy-N,N,N-trimethylethanaminium": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "N,N,N-trimethylethanol-ammonium": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "CHOLINE ION": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "N-trimethylethanolamine": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "[N-methyl-(11)C]choline": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "Choline C-11": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "Choline C11": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "(11)C-Choline": [
+        "chol_n",
+        "chol_m",
+        "chol_e",
+        "chol_c",
+        "chol_g",
+        "chol_r"
+    ],
+    "(R)-3-Amino-2-methylpropanoate": [
+        "3aib_m",
+        "3aib_c",
+        "3aib_e"
+    ],
+    "(2R)-3-amino-2-methylpropanoic acid": [
+        "3aib_m",
+        "3aib_c",
+        "3aib_e"
+    ],
+    "(R)-3-amino-2-methylpropanoate": [
+        "3aib_m",
+        "3aib_c",
+        "3aib_e"
+    ],
+    "(R)-beta-aminoisobutyric acid": [
+        "3aib_m",
+        "3aib_c",
+        "3aib_e"
+    ],
+    "D-3-Amino-isobutanoate": [
+        "3aib_m",
+        "3aib_c",
+        "3aib_e"
+    ],
+    "(2R)-3-amino-2-methylpropanoate": [
+        "3aib_m",
+        "3aib_c",
+        "3aib_e"
+    ],
+    "(R)-beta-aminoisobutyrate": [
+        "3aib_m",
+        "3aib_c",
+        "3aib_e"
+    ],
+    "(2R)-3-ammonio-2-methylpropanoate": [
+        "3aib_m",
+        "3aib_c",
+        "3aib_e"
+    ],
+    "(2R)-3-azaniumyl-2-methylpropanoate": [
+        "3aib_m",
+        "3aib_c",
+        "3aib_e"
+    ],
+    "OXALATE ION": [
+        "oxa_m",
+        "oxa_c",
+        "oxa_x",
+        "oxa_e"
+    ],
+    "Oxalic acid": [
+        "oxa_m",
+        "oxa_c",
+        "oxa_x",
+        "oxa_e"
+    ],
+    "Ethanedioic acid": [
+        "oxa_m",
+        "oxa_c",
+        "oxa_x",
+        "oxa_e"
+    ],
+    "H2ox": [
+        "oxa_m",
+        "oxa_c",
+        "oxa_x",
+        "oxa_e"
+    ],
+    "OXALIC ACID": [
+        "oxa_m",
+        "oxa_c",
+        "oxa_x",
+        "oxa_e"
+    ],
+    "HOOCCOOH": [
+        "oxa_m",
+        "oxa_c",
+        "oxa_x",
+        "oxa_e"
+    ],
+    "Oxalsaeure": [
+        "oxa_m",
+        "oxa_c",
+        "oxa_x",
+        "oxa_e"
+    ],
+    "Ethandisaeure": [
+        "oxa_m",
+        "oxa_c",
+        "oxa_x",
+        "oxa_e"
+    ],
+    "Hox": [
+        "oxa_m",
+        "oxa_c",
+        "oxa_x",
+        "oxa_e"
+    ],
+    "N-Acetyl-D-glucosamine": [
+        "acgam_e",
+        "acgam_c",
+        "acgam_l",
+        "acgam_r"
+    ],
+    "N-Acetylchitosamine": [
+        "acgam_e",
+        "acgam_c",
+        "acgam_l",
+        "acgam_r"
+    ],
+    "2-Acetamido-2-deoxy-D-glucose": [
+        "acgam_e",
+        "acgam_c",
+        "acgam_l",
+        "acgam_r"
+    ],
+    "2-acetamido-2-deoxy-D-glucose": [
+        "acgam_e",
+        "acgam_c",
+        "acgam_l",
+        "acgam_r"
+    ],
+    "D-GlcNAc": [
+        "acgam_e",
+        "acgam_c",
+        "acgam_l",
+        "acgam_r"
+    ],
+    "GlcNAc": [
+        "acgam_e",
+        "acgam_c",
+        "acgam_l",
+        "acgam_r"
+    ],
+    "2-acetamido-2-deoxy-D-glucopyranose": [
+        "acgam_e",
+        "acgam_c",
+        "acgam_l",
+        "acgam_r"
+    ],
+    "N-acetyl-D-glucosamine": [
+        "acgam_e",
+        "acgam_c",
+        "acgam_l",
+        "acgam_r"
+    ],
+    "WURCS=2.0/1,1,0/[a2122h-1x_1-5_2*NCC/3=O]/1/": [
+        "acgam_e",
+        "acgam_c",
+        "acgam_l",
+        "acgam_r"
+    ],
+    "2-Oxo-3-methylbutanoate": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "2-Oxoisovalerate": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "2-Oxoisopentanoate": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "3-Methyl-2-oxobutyric acid": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "alpha-Ketovaline": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "2-Ketovaline": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "2-Keto-3-methylbutyric acid": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "3-Methyl-2-oxobutanoic acid": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "3-METHYL-2-OXOBUTANOIC ACID": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "Isopropylglyoxylic acid": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "2-Ketoisovaleric acid": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "2-Oxo-3-methylbutanoic acid": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "2-Oxo-3-methylbutyric acid": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "2-Oxoisovaleric acid": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "Dimethylpyruvic acid": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "3-Methyl-2-oxobutanoate": [
+        "3mob_m",
+        "3mob_c",
+        "3mob_e"
+    ],
+    "myo-Inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "D-myo-Inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "1D-myo-Inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "L-myo-Inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "1L-myo-Inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "meso-Inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "Inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "Dambose": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "Cyclohexitol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "Meat sugar": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "Bios I": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "(1r,2R,3S,4s,5R,6S)-cyclohexane-1,2,3,4,5,6-hexol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "1,2,3,4,5,6-HEXAHYDROXY-CYCLOHEXANE": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "Myoinositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "Ins": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "D-inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "(+)-Inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "1D-chiro-inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "(1R,2R,3S,4S,5S,6S)-cyclohexane-1,2,3,4,5,6-hexol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "DCI": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "cis-1,2,4-trans-3,5,6-Cyclohexanehexol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "D-(+)-chiro-inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "D-chiro-inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
+    ],
+    "(+)-chiro-inositol": [
+        "inost_e",
+        "inost_c",
+        "inost_g",
+        "inost_r"
     ]
 }
