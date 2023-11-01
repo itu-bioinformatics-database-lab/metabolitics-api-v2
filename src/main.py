@@ -39,13 +39,16 @@ def run_api():
 
 @cli.command()
 def run_celery():
-    call('celery -A app.celery worker')
+    call('celery -A app.celery worker', shell=True)
     # celery4 = make_celery(app)
     #call('celery -A app.celery.celery worker -l info -Q celery')
 
     # call('celery --app =app worker --loglevel=info')
     # make_celery(app)
 
+@cli.command()
+def run_celery_beat():
+    call('celery -A app.celery beat', shell=True)
 
 @cli.command()
 def migrate():
