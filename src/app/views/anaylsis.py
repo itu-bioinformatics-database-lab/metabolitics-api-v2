@@ -16,6 +16,7 @@ import datetime
 from ..services.mail_service import *
 import os
 import pickle
+from ..pe import *
 
 
 
@@ -355,9 +356,155 @@ def direct_pathway_mapping2():
         send_mail( request.json["email"], request.json['study_name'] + ' Analysis Results', message)
         return jsonify({'id': analysis_id})
 
+#### pathway enrichment analysis
+
+@app.route('/analysis/pathway-enrichment', methods=['GET', 'POST'])
+@jwt_required()
+def pathway_enrichment():
+
+    (data, error) = AnalysisInputSchema().load(request.json)
+    if error:
+        return jsonify(error), 400
+    if not request.json:
+        return "", 404
+
+    enhance_synonyms.delay(data)
+
+    data = checkMapped(data)
+
+    user = User.query.filter_by(email=str(current_identity)).first()
+
+    if len(data['analysis']) == 0:
+        return jsonify({'id': 'mapping_error'})
+
+    else:
+
+
+        disease = Disease.query.get(request.json['disease'])
+        study = Dataset(
+            name=data['study_name'],
+            method_id=3,
+            status=True,
+            group=data["group"],
+            disease_id=disease.id,
+            disease=disease)
+        db.session.add(study)
+        db.session.commit()
+        analysis_id = 0
+        for key,value in data["analysis"].items():  # user as key, value {metaboldata , label}
+
+            if len(value['Metabolites']) > 0:
+
+                metabolomics_data = MetabolomicsData(
+                    metabolomics_data = value["Metabolites"],
+                    owner_email = str(user),
+                    is_public = True if request.json['public'] else False
+                )
+
+                metabolomics_data.disease_id = disease.id
+                metabolomics_data.disease = disease
+                db.session.add(metabolomics_data)
+                db.session.commit()
+
+                analysis = Analysis(name =key, user = user)
+                analysis.label = value['Label']
+                analysis.name = key
+                # analysis.status = True
+                analysis.type = 'public' if request.json['public'] else "private"
+                analysis.start_time = datetime.datetime.now()
+
+                analysis.owner_user_id = user.id
+                analysis.owner_email = user.email
+
+                analysis.metabolomics_data_id = metabolomics_data.id
+                analysis.dataset_id = study.id
+                analysis_runs = PathwayEnrichment(value["Metabolites"])  # Forming the instance
+                # fold_changes
+                analysis_runs.run()  # Making the analysis
+                analysis.results_pathway = [analysis_runs.result_pathways]
+                analysis.results_reaction = [analysis_runs.result_reactions]
+                analysis.end_time = datetime.datetime.now()
+
+                db.session.add(analysis)
+                db.session.commit()
+                analysis_id = analysis.id
 
 
 
+        return jsonify({'id': analysis_id})
+
+### pathway enrichment analysis public
+
+@app.route('/analysis/pathway-enrichment/public', methods=['GET', 'POST'])
+def pathway_enrichment2():
+    # print(request.json)
+    (data, error) = AnalysisInputSchema2().load(request.json)
+    if error:
+        return jsonify(error), 400
+    if not request.json:
+        return "", 404
+
+    enhance_synonyms.delay(data)
+
+    data = checkMapped(data)
+    user = User.query.filter_by(email='tajothman@std.sehir.edu.tr').first()
+    if len(data['analysis']) == 0:
+        return jsonify({'id':'mapping_error'})
+
+    else:
+        disease = Disease.query.get(request.json['disease'])
+        study = Dataset(
+            name=data['study_name'],
+            method_id=3,
+            status=True,
+            group=data["group"],
+            disease_id=disease.id,
+            disease=disease)
+        db.session.add(study)
+        db.session.commit()
+
+        analysis_id = 0
+        for key,value in data["analysis"].items():  # user as key, value {metaboldata , label}
+
+            if len(value['Metabolites']) > 0:
+                metabolomics_data = MetabolomicsData(
+                    metabolomics_data = value["Metabolites"],
+                    owner_email = str(user),
+                    is_public = True
+                )
+                print('ok')
+
+                metabolomics_data.disease_id = disease.id
+                metabolomics_data.disease = disease
+                db.session.add(metabolomics_data)
+                db.session.commit()
+
+                analysis = Analysis(name =key, user = user)
+                analysis.label = value['Label']
+                analysis.name = key
+                # analysis.status = True
+                analysis.type = 'public'
+                analysis.start_time = datetime.datetime.now()
+
+                analysis.owner_user_id = user.id
+                analysis.owner_email = request.json["email"]
+
+                analysis.metabolomics_data_id = metabolomics_data.id
+                analysis.dataset_id = study.id
+                analysis_runs = PathwayEnrichment(value["Metabolites"])  # Forming the instance
+                # fold_changes
+                analysis_runs.run()  # Making the analysis
+                analysis.results_pathway = [analysis_runs.result_pathways]
+                analysis.results_reaction = [analysis_runs.result_reactions]
+                analysis.end_time = datetime.datetime.now()
+
+                db.session.add(analysis)
+                db.session.commit()
+                analysis_id = analysis.id
+
+        message = 'Hello, \n you can find your analysis results in the following link: \n http://metabolitics.itu.edu.tr/past-analysis/' + str(analysis_id)
+        send_mail( request.json["email"], request.json['study_name'] + ' Analysis Results', message)
+        return jsonify({'id': analysis_id})
 
 
 ###############################################################################

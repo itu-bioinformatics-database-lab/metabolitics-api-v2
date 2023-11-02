@@ -32,6 +32,10 @@ class MetaboliticsBase:
     def get_reaction_names(self):
         """Getting reaction names"""
         return self.data['reactions'].keys()
+    
+    def get_pathway_names(self):
+        """Getting pathway names"""
+        return self.data['pathways'].keys()
 
     def get_metabolites_by_pathway(self, pathway):
         """
