@@ -84,37 +84,32 @@ def enhance_synonyms(data):
 @celery.task(name='train_save_model')
 def train_save_model():
     print('Training and saving models...')
-    dataset_ids = db.session.query(Analysis.dataset_id).filter(Analysis.label != 'not_provided').distinct()
-    for dataset_id, in dataset_ids:
-        path = '../trained_models/analysis' + str(dataset_id) + '_model.p'
-        if os.path.isfile(path):
-            continue
-        metabolomics_data_ids = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == dataset_id)
-        metabolomics_data_ids = metabolomics_data_ids.filter(Analysis.label.notlike('%Group Avg%')).filter(Analysis.label.notlike('%label avg%')).all()
-        metabolomics_datum = db.session.query(MetabolomicsData.metabolomics_data).filter(MetabolomicsData.id.in_(metabolomics_data_ids)).all()
-        X = [metabolomics_data[0] for metabolomics_data in metabolomics_datum]
-        labels = db.session.query(Analysis.label).filter(Analysis.dataset_id == dataset_id)
-        labels = labels.filter(Analysis.label.notlike('%Group Avg%')).filter(Analysis.label.notlike('%label avg%')).all()
-        y = [label[0] for label in labels]
-        disease_id, = db.session.query(Dataset.disease_id).filter(Dataset.id == dataset_id).first()
-        disease, = db.session.query(Disease.name).filter(Disease.id == disease_id).first()
-        group, = db.session.query(Dataset.group).filter(Dataset.id == dataset_id).first()
-        healthy = y.count(group)
-        patient = len(y) - healthy
-        if healthy < 20 or patient < 20:
-            continue
+    disease_ids = db.session.query(Dataset.disease_id).filter(Dataset.group != 'not_provided').filter(Dataset.method_id == 1).distinct()
+    for disease_id in disease_ids:
+        disease_name = Disease.query.get(disease_id).name
+        dataset_ids = db.session.query(Dataset.id).filter(Dataset.disease_id == disease_id).filter(
+            Dataset.group != 'not_provided').filter(Dataset.method_id == 1).all()
+        metabolomics_datum_labels = db.session.query(Analysis).join(MetabolomicsData).filter(Analysis.label.notlike(
+            '%label avg%')).filter(Analysis.label.notlike('%Group Avg%')).filter(Analysis.dataset_id.in_(dataset_ids)).with_entities(
+                MetabolomicsData.metabolomics_data, Analysis.label).all()
+        metabolomics_datum = [value[0] for value in metabolomics_datum_labels]
+        labels = [value[1] for value in metabolomics_datum_labels]
+        groups = db.session.query(Dataset.group).filter(Dataset.id.in_(dataset_ids)).all()
+        groups = [group[0] for group in groups]
+        labels = ['healthy' if label in groups else label for label in labels]
+        path = '../trained_models/' + disease_name + '_model.p'
         try:
             pipe = Pipeline([
                 ('vect', DictVectorizer(sparse=False)),
                 ('pca', PCA()),
                 ('clf', LogisticRegression(C=0.3e-6, random_state=43))
             ])
-            model = pipe.fit(X, y)
-            kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=43)
-            scores = cross_val_score(pipe, X, y, cv=kf, n_jobs=None, scoring='f1_micro')
+            model = pipe.fit(metabolomics_datum, labels)
+            kfold = StratifiedKFold(n_splits=2, shuffle=True, random_state=43)
+            scores = cross_val_score(pipe, metabolomics_datum, labels, cv=kfold, n_jobs=None, scoring='f1_micro')
             score = scores.mean().round(3)
             save = {}
-            save['disease'] = disease
+            save['disease_name'] = disease_name
             save['model'] = model
             save['score'] = score
             with open(path, 'wb') as f:

@@ -634,8 +634,7 @@ def disease_prediction(id: int):
         return '', 404
     if not analysis.authenticated():
         return '', 401
-    metabolomics_data_id = analysis.metabolomics_data_id
-    metabolomics_data = MetabolomicsData.query.get(metabolomics_data_id).metabolomics_data
+    metabolomics_data = MetabolomicsData.query.get(analysis.metabolomics_data_id).metabolomics_data
     dir = '../trained_models'
     predictions = []
     for file in os.listdir(dir):
@@ -644,11 +643,12 @@ def disease_prediction(id: int):
         path = os.path.join(dir, file)
         if os.path.isfile(path):
             saved = pickle.load(open(path, 'rb'))
-            disease = saved['disease']
+            disease_name = saved['disease_name']
             model = saved['model']
             score = saved['score']
             prediction = model.predict(metabolomics_data)[0]
-            predictions.append({'disease' : disease, 'prediction' : prediction, 'score': score})
+            if prediction != 'healthy':
+                predictions.append({'disease_name' : disease_name, 'score': score})
     return jsonify(predictions)
 
 @app.route('/analysis/<type>')
