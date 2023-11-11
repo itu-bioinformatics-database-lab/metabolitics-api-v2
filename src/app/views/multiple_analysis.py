@@ -352,7 +352,7 @@ def group_avg(sample_data3,checker=1):
 
 
         if v["Label"].lower() not in labels_case:
-            labels_case.setdefault(v["Label"],[])
+            labels_case.setdefault(v["Label"].lower(),[])
             labels_case[v["Label"].lower()].append(v['Metabolites'])
         else:
             labels_case[v["Label"].lower()].append(v['Metabolites'])
