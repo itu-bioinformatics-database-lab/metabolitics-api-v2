@@ -586,9 +586,9 @@ def most_similar_diseases(id: int):
         return '', 401
     analysis_method_id = Dataset.query.get(analysis.dataset_id).method_id
 
-    public_analyses = db.session.query(Analysis, Dataset, Disease).join(Dataset).join(Disease).filter(
+    public_analyses = db.session.query(Analysis).join(Dataset).join(Disease).filter(
         Analysis.type == 'public').filter(Dataset.method_id == analysis_method_id).filter(
-            Analysis.id != analysis.id).with_entities(Disease.name, Analysis.results_pathway).all()
+            Analysis.id != analysis.id).filter(Analysis.results_pathway != None).with_entities(Disease.name, Analysis.results_pathway).all()
     diseases = [i[0] for i in public_analyses]
     results_pathways = [i[1][0] for i in public_analyses]
     similarities = similarty_dict(analysis.results_pathway[0], results_pathways)
