@@ -97,7 +97,7 @@ def train_save_model():
         groups = db.session.query(Dataset.group).filter(Dataset.id.in_(dataset_ids)).all()
         groups = [group[0] for group in groups]
         labels = ['healthy' if label in groups else label for label in labels]
-        path = './trained_models/' + disease_name.replace(' ', '_') + '_' + str(disease_id[0]) + '_model.p'
+        path = '../trained_models/' + disease_name.replace(' ', '_') + '_' + str(disease_id[0]) + '_model.p'
         try:
             pipe = Pipeline([
                 ('vect', DictVectorizer(sparse=False)),
