@@ -637,9 +637,10 @@ def disease_prediction(id: int):
         return '', 401
     metabolomics_data = MetabolomicsData.query.get(analysis.metabolomics_data_id).metabolomics_data
     res += str(metabolomics_data)
-    dir = '../trained_models'
+    dir = './trained_models'
     predictions = []
     for file in os.listdir(dir):
+        res += 'file*'
         if file == '.keep':
             continue
         path = os.path.join(dir, file)
