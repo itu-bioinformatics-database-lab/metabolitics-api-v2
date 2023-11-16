@@ -647,8 +647,8 @@ def disease_prediction(id: int):
             model = saved['model']
             score = saved['score']
             prediction = model.predict(metabolomics_data)[0]
-            if prediction != 'healthy':
-                predictions.append({'disease_name' : disease_name, 'score': score})
+            #if prediction != 'healthy':
+            predictions.append({'disease_name' : disease_name, 'score': score})
     return jsonify(predictions)
 
 @app.route('/analysis/<type>')
