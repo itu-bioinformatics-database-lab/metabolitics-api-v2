@@ -4,7 +4,7 @@ import json
 class MetaboliticsBase:
     """Base class of Metabolitics """
 
-    def __init__(self, dataset='recon2', file_type='.json'):
+    def __init__(self, dataset='Recon3D', file_type='.json'):
         self.dataset = dataset
         self.file_type = file_type
         self.data = {}

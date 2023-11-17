@@ -50,10 +50,10 @@ def enhance_synonyms(data):
     print('Enhancing synonyms...')
     with open('../datasets/assets/synonyms.json') as f:
         synonyms = json.load(f, object_pairs_hook=OrderedDict)
-    with open('../datasets/assets/recon2.json') as f:
-        recon2 = json.load(f)
-    recon2_metabolites = recon2['metabolites'].keys()
-    recon2_metabolites = list(recon2_metabolites)
+    with open('../datasets/assets/Recon3D.json') as f:
+        recon3d = json.load(f)
+    recon3d_metabolites = recon3d['metabolites'].keys()
+    recon3d_metabolites = list(recon3d_metabolites)
     for key, value in data['analysis'].items():
         metabolites = value['Metabolites']
         for metabolite in metabolites:
@@ -65,7 +65,7 @@ def enhance_synonyms(data):
                 bigg_response = requests.get(bigg_url).json()
                 bigg_compartments = bigg_response['compartments_in_models']
                 compartments = set(bigg_compartment['bigg_id'] for bigg_compartment in bigg_compartments)
-                bigg_ids = [bigg_id + '_' + compartment for compartment in compartments if bigg_id + '_' + compartment in recon2_metabolites]
+                bigg_ids = [bigg_id + '_' + compartment for compartment in compartments if bigg_id + '_' + compartment in recon3d_metabolites]
                 chebi_links = bigg_response['database_links']['CHEBI']
                 for link in chebi_links:
                     chebi_id = link['id']
