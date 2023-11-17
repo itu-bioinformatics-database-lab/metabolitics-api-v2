@@ -64,4 +64,4 @@ class PathwayEnrichment():
             print("No result found!")
     
     def run(self):
-        self.result_pathways, self.result_reactions = self.score_pathways(), self.score_reactions()
+        self.result_pathways = self.score_pathways()
