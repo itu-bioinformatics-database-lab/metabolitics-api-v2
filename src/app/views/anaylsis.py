@@ -923,3 +923,9 @@ def checkMapped(data):
                 output['analysis'][case] = temp
         print(output)
         return output
+
+@app.route("/synonyms", methods=['GET'])
+def synonyms():
+    with open('../datasets/assets/synonyms.json') as f:
+        synonyms = json.load(f)
+    return jsonify(synonyms)
