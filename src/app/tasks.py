@@ -89,11 +89,11 @@ def train_save_model():
         disease_name = Disease.query.get(disease_id).name
         dataset_ids = db.session.query(Dataset.id).filter(Dataset.disease_id == disease_id).filter(
             Dataset.group != 'not_provided').filter(Dataset.method_id == 1).all()
-        metabolomics_datum_labels = db.session.query(Analysis).join(MetabolomicsData).filter(Analysis.label.notlike(
-            '%label avg%')).filter(Analysis.label.notlike('%Group Avg%')).filter(Analysis.dataset_id.in_(dataset_ids)).with_entities(
-                MetabolomicsData.metabolomics_data, Analysis.label).all()
-        metabolomics_datum = [value[0] for value in metabolomics_datum_labels]
-        labels = [value[1] for value in metabolomics_datum_labels]
+        results_reactions_labels = db.session.query(Analysis).join(MetabolomicsData).filter(Analysis.label.notlike(
+            '%label avg%')).filter(Analysis.label.notlike('%Group Avg%')).filter(Analysis.dataset_id.in_(dataset_ids)).filter(Analysis.results_pathway != None).with_entities(
+                Analysis.results_pathway, Analysis.label).all()
+        results_pathways = [value[0][0] for value in results_reactions_labels]
+        labels = [value[1] for value in results_reactions_labels]
         groups = db.session.query(Dataset.group).filter(Dataset.id.in_(dataset_ids)).all()
         groups = [group[0] for group in groups]
         labels = ['healthy' if label in groups else label for label in labels]
@@ -104,9 +104,9 @@ def train_save_model():
                 ('pca', PCA()),
                 ('clf', LogisticRegression(C=0.3e-6, random_state=43))
             ])
-            model = pipe.fit(metabolomics_datum, labels)
+            model = pipe.fit(results_pathways, labels)
             kfold = StratifiedKFold(n_splits=2, shuffle=True, random_state=43)
-            scores = cross_val_score(pipe, metabolomics_datum, labels, cv=kfold, n_jobs=None, scoring='f1_micro')
+            scores = cross_val_score(pipe, results_pathways, labels, cv=kfold, n_jobs=None, scoring='f1_micro')
             score = scores.mean().round(3)
             save = {}
             save['disease_name'] = disease_name

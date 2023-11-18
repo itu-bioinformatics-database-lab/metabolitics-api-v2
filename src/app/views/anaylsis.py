@@ -634,7 +634,7 @@ def disease_prediction(id: int):
         return '', 404
     if not analysis.authenticated():
         return '', 401
-    metabolomics_data = MetabolomicsData.query.get(analysis.metabolomics_data_id).metabolomics_data
+    results_pathway = analysis.results_pathway[0]
     dir = '../trained_models'
     predictions = []
     for file in os.listdir(dir):
@@ -646,7 +646,7 @@ def disease_prediction(id: int):
             disease_name = saved['disease_name']
             model = saved['model']
             score = saved['score']
-            prediction = model.predict(metabolomics_data)[0]
+            prediction = model.predict(results_pathway)[0]
             if prediction != 'healthy':
                 predictions.append({'disease_name' : disease_name, 'score': score})
     return jsonify(predictions)
