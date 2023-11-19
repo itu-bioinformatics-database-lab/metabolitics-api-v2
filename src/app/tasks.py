@@ -50,7 +50,7 @@ def enhance_synonyms(data):
     print('Enhancing synonyms...')
     with open('../datasets/assets/synonyms.json') as f:
         synonyms = json.load(f, object_pairs_hook=OrderedDict)
-    with open('../datasets/assets/Recon3D.json') as f:
+    with open('../datasets/assets/recon3D.json') as f:
         recon3d = json.load(f)
     recon3d_metabolites = recon3d['metabolites'].keys()
     recon3d_metabolites = list(recon3d_metabolites)

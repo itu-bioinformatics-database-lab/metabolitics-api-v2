@@ -46,7 +46,7 @@ def metabolc(data):
     #     tempo = line.split(",")
     #     mapping_metabolites[tempo[0].strip()] = tempo[1].strip()
     #
-    with open('../datasets/assets/Recon3D.json') as f:
+    with open('../datasets/assets/recon3D.json') as f:
         mapping_data1= json.load(f)
         mapping_data1 = mapping_data1["metabolites"]
 
@@ -272,7 +272,7 @@ def mwlab_mapper():
         isMapped = {}
         #
         #
-        with open('../datasets/assets/Recon3D.json') as f:
+        with open('../datasets/assets/recon3D.json') as f:
             mapping_data1 = json.load(f)
             mapping_data1 = mapping_data1["metabolites"]
 

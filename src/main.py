@@ -98,7 +98,7 @@ def generate_angular_friendly_model():
     This function convert json model into angular friendly json
     '''
     model = load_network_model()
-    model_json = json.load(open('../dataset/network/Recon3D.json'))
+    model_json = json.load(open('../dataset/network/recon3D.json'))
 
     reactions, metabolites = model_json['reactions'], model_json['metabolites']
     model_json = defaultdict(dict)

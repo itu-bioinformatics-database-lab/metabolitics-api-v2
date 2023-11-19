@@ -62,7 +62,7 @@ class DataReader(object):
     def read_categorical_solutions(self):
         raise NotImplemented()
 
-    def read_network_model(self, name='Recon3D'):
+    def read_network_model(self, name='recon3D'):
         return cb.io.load_json_model('../dataset/network/%s.json' % name)
 
     def read_subsystem_categories(self, name='recon'):
