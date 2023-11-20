@@ -1,7 +1,7 @@
 import datetime
 import pickle
 
-from metabolitics.preprocessing import MetaboliticsPipeline
+from metabolitics3d.preprocessing import MetaboliticsPipeline
 from .app import celery
 from .models import db, Analysis
 
