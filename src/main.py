@@ -20,8 +20,8 @@ from app.models import db, Method, User, Disease
 from app.DOParser import DOParser
 
 from sklearn_utils.utils import SkUtilsIO
-from metabolitics3d.preprocessing import *
-from metabolitics3d.utils import load_network_model
+from metabolitics.preprocessing import *
+from metabolitics.utils import load_network_model
 
 @click.group()
 def cli():
