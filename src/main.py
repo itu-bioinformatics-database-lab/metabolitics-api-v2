@@ -138,7 +138,7 @@ def healties_model():
     X_t = pipe.fit_transform(X, y)
 
     model = Pipeline([
-        ('metabolitics-transformer', MetaboliticsTransformer(n_jobs=5)),
+        ('metabolitics-transformer', MetaboliticsTransformer(n_jobs=1)),
         ('reaction-diff', ReactionDiffTransformer())
     ])
     # model = MetaboliticsPipeline([
