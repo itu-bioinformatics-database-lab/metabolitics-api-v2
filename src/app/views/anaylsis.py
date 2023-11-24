@@ -422,7 +422,7 @@ def pathway_enrichment():
                 # fold_changes
                 analysis_runs.run()  # Making the analysis
                 analysis.results_pathway = [analysis_runs.result_pathways]
-                #analysis.results_reaction = [analysis_runs.result_reactions]
+                analysis.results_reaction = [analysis_runs.result_reactions]
                 analysis.end_time = datetime.datetime.now()
 
                 db.session.add(analysis)
@@ -495,7 +495,7 @@ def pathway_enrichment2():
                 # fold_changes
                 analysis_runs.run()  # Making the analysis
                 analysis.results_pathway = [analysis_runs.result_pathways]
-                #analysis.results_reaction = [analysis_runs.result_reactions]
+                analysis.results_reaction = [analysis_runs.result_reactions]
                 analysis.end_time = datetime.datetime.now()
 
                 db.session.add(analysis)
