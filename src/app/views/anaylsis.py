@@ -634,7 +634,16 @@ def disease_prediction(id: int):
         return '', 404
     if not analysis.authenticated():
         return '', 401
-    results_pathway = analysis.results_pathway[0]
+    results_reaction = analysis.results_reaction[0]
+    with open('../datasets/assets/recon3D.json') as f:
+        recon3d = json.load(f)
+    reactions = recon3d['reactions']
+    X_pred = []
+    for reaction in reactions:
+        if reaction in results_reaction:
+            X_pred.append(results_reaction[reaction])
+        else:
+            X_pred.append(0)
     dir = '../trained_models'
     predictions = []
     for file in os.listdir(dir):
@@ -646,7 +655,7 @@ def disease_prediction(id: int):
             disease_name = saved['disease_name']
             model = saved['model']
             score = saved['score']
-            prediction = model.predict(results_pathway)[0]
+            prediction = model.predict([X_pred])[0]
             if prediction != 'healthy':
                 predictions.append({'disease_name' : disease_name, 'score': score})
     return jsonify(predictions)
