@@ -23,6 +23,8 @@ def save_analysis(analysis_id, concentration_changes,registered=True,mail='none'
     with open('../models/api_model.p', 'rb') as f:
         reaction_scaler = pickle.load(f)
 
+    reaction_scaler['metabolitics-transformer'].analyzer.model.solver = 'cplex'
+
     pathway_scaler = MetaboliticsPipeline([
         'pathway-transformer',
         'transport-pathway-elimination'
