@@ -17,6 +17,8 @@ from ..services.mail_service import *
 import os
 import pickle
 from ..pe import *
+from metabolitics3d.preprocessing import MetaboliticsPipeline
+import sys
 
 
 
@@ -732,13 +734,28 @@ def analysis_detail(id):
     study = Dataset.query.get(analysis.dataset_id)
     method = Method.query.get(study.method_id)
     disease = Disease.query.get(study.disease_id)
+    if analysis.label != 'not_provided':
+        group, = db.session.query(Dataset.group).filter(Dataset.id == analysis.dataset_id).first()
+        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == group + ' label avg').first()
+        healthy_data = MetabolomicsData.query.get(healthy).metabolomics_data
+        pipe = MetaboliticsPipeline([
+            'fold-change-scaler'
+        ])
+        metabol_data = metabolomics_data.metabolomics_data
+        for key, value in metabol_data.items():
+            metabol_data[key] = value if value != 0 else sys.float_info.min
+        for key, value in healthy_data.items():
+            healthy_data[key] = value if value != 0 else sys.float_info.min
+        fold_changes = pipe.fit_transform([metabol_data, healthy_data], [analysis.label, 'healthy'])[0]
+    else:
+        fold_changes = metabolomics_data.metabolomics_data
     data = {
         'case_name': analysis.name,
         'status': study.status,
         'results_pathway': analysis.results_pathway,
         'results_reaction': analysis.results_reaction,
         'method': method.name,
-        'fold_changes': metabolomics_data.metabolomics_data,
+        'fold_changes': fold_changes,
         'study_name': study.name,
         'analyses': [],
         'disease': disease.name
