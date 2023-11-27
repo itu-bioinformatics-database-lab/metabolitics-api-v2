@@ -380,7 +380,7 @@ def group_avg(sample_data3,checker=1):
 
 
 
-    final.append(["Group Avg",labels])
+    #final.append(["Group Avg",labels])
     final_combined = average(final)
     return final_combined
 
