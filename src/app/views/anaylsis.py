@@ -736,7 +736,7 @@ def analysis_detail(id):
     disease = Disease.query.get(study.disease_id)
     if analysis.label != 'not_provided':
         group, = db.session.query(Dataset.group).filter(Dataset.id == analysis.dataset_id).first()
-        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == group + ' label avg').first()
+        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == str(group).lower() + ' label avg').first()
         healthy_data = MetabolomicsData.query.get(healthy).metabolomics_data
         pipe = MetaboliticsPipeline([
             'fold-change-scaler'
