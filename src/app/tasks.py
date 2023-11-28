@@ -52,10 +52,6 @@ def enhance_synonyms(data):
     print('Enhancing synonyms...')
     with open('../datasets/assets/synonyms.json') as f:
         synonyms = json.load(f, object_pairs_hook=OrderedDict)
-    with open('../datasets/assets/recon3D.json') as f:
-        recon3d = json.load(f)
-    recon3d_metabolites = recon3d['metabolites'].keys()
-    recon3d_metabolites = list(recon3d_metabolites)
     for key, value in data['analysis'].items():
         metabolites = value['Metabolites']
         for metabolite in metabolites:
@@ -65,9 +61,6 @@ def enhance_synonyms(data):
                 bigg_id = metabolite[:metabolite.rindex('_')]
                 bigg_url = 'http://bigg.ucsd.edu/api/v2/universal/metabolites/' + bigg_id
                 bigg_response = requests.get(bigg_url).json()
-                bigg_compartments = bigg_response['compartments_in_models']
-                compartments = set(bigg_compartment['bigg_id'] for bigg_compartment in bigg_compartments)
-                bigg_ids = [bigg_id + '_' + compartment for compartment in compartments if bigg_id + '_' + compartment in recon3d_metabolites]
                 chebi_links = bigg_response['database_links']['CHEBI']
                 for link in chebi_links:
                     chebi_id = link['id']
@@ -75,8 +68,8 @@ def enhance_synonyms(data):
                     chebi_synonyms = chebi_entity.get_names()
                     for synonym in chebi_synonyms:
                         synonym = synonym.get_name()
-                        if not synonym in synonyms.keys() and len(bigg_ids) != 0:
-                            synonyms.update({synonym : bigg_ids})
+                        if not synonym in synonyms.keys():
+                            synonyms.update({synonym : metabolite})
             except:
                 pass
     with open('../datasets/assets/synonyms.json', 'w') as f:
