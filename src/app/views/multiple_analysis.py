@@ -101,7 +101,10 @@ def user_metabol(data):
         temp = []
         for j in data:
             if len(j) > 0:
+                if i < len(j):
                     temp.append(j[i])
+                else:
+                    temp.append(None)
         container.append(temp)
 
     for row in container:
@@ -135,7 +138,8 @@ def excel_data_Prpcessing(data, meta):
     for key, value in data2.items():
         temp = {}
         for index_metas in range(0, len(value), 1):
-            temp[metabol[index_metas]] =  value[index_metas]
+            if value[index_metas] != None:
+                temp[metabol[index_metas]] =  value[index_metas]
 
         users_metabolite[key] = {"Metabolites": temp, "Label": users_labels[key]}
     #
