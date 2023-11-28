@@ -939,8 +939,9 @@ def checkMapped(data):
                     temp['Metabolites'][mapping_data2[i]] = float(str(metabolites[i]).strip())
 
                 if i in mapping_data1.keys():
-                    print(type(metabolites[i]))
-                    temp['Metabolites'][i] = float(str(metabolites[i]).strip())
+                    if metabolites[i] != '':
+                        print(type(metabolites[i]))
+                        temp['Metabolites'][i] = float(str(metabolites[i]).strip())
 
                 # elif i in mapping_metabolites.keys():
                 #     temp['Metabolites'][mapping_metabolites[i]] = metabolites[i]
