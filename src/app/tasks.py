@@ -79,15 +79,12 @@ def enhance_synonyms(data):
 @celery.task(name='train_save_model')
 def train_save_model():
     print('Training and saving models...')
-    with open('../datasets/assets/recon3D.json') as f:
-        recon3d = json.load(f)
-    reactions = recon3d['reactions']
     disease_ids = db.session.query(Dataset.disease_id).filter(Dataset.group != 'not_provided').filter(Dataset.method_id == 1).distinct()
     for disease_id in disease_ids:
         disease_name = Disease.query.get(disease_id).name
         dataset_ids = db.session.query(Dataset.id).filter(Dataset.disease_id == disease_id).filter(
             Dataset.group != 'not_provided').filter(Dataset.method_id == 1).all()
-        results_reactions_labels = db.session.query(Analysis).filter(Analysis.label.notlike('%label avg%')).filter(Analysis.label.notlike('%Group Avg%')).filter(
+        results_reactions_labels = db.session.query(Analysis).filter(Analysis.label.notlike('%label avg%')).filter(
             Analysis.dataset_id.in_(dataset_ids)).filter(Analysis.results_reaction != None).with_entities(
                 Analysis.results_reaction, Analysis.label).all()
         results_reactions = [value[0][0] for value in results_reactions_labels]
@@ -97,22 +94,14 @@ def train_save_model():
         labels = ['healthy' if label in groups else label for label in labels]
         path = '../trained_models/' + disease_name.replace(' ', '_') + '_' + str(disease_id[0]) + '_model.p'
         try:
-            X_train = []
-            for results_reaction in results_reactions:
-                sample = []
-                for reaction in reactions:
-                    if reaction in results_reaction:
-                        sample.append(results_reaction[reaction])
-                    else:
-                        sample.append(0)
-                X_train.append(sample)
             pipe = Pipeline([
+                ('vect', DictVectorizer(sparse=False)),
                 ('pca', PCA()),
-                ('clf', LogisticRegression(C=0.3e-6, random_state=43))
+                ('clf', LogisticRegression(C=0.3e-6, random_state=43, solver='lbfgs'))
             ])
-            model = pipe.fit(X_train, labels)
+            model = pipe.fit(results_reactions, labels)
             kfold = StratifiedKFold(n_splits=2, shuffle=True, random_state=43)
-            scores = cross_val_score(pipe, X_train, labels, cv=kfold, n_jobs=None, scoring='f1_micro')
+            scores = cross_val_score(pipe, results_reactions, labels, cv=kfold, n_jobs=None, scoring='f1_micro')
             score = scores.mean().round(3)
             save = {}
             save['disease_name'] = disease_name
