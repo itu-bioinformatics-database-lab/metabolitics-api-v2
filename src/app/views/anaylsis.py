@@ -729,6 +729,7 @@ def analysis_detail(id):
     analysis = Analysis.query.get(id)
     metabolomics_data = MetabolomicsData.query.get(analysis.metabolomics_data_id)
     study = Dataset.query.get(analysis.dataset_id)
+    group = study.group
     method = Method.query.get(study.method_id)
     disease = Disease.query.get(study.disease_id)
     if analysis.label != 'not_provided':
@@ -761,7 +762,8 @@ def analysis_detail(id):
     for analysis in analyses:
         data['analyses'].append({
             'id': analysis.id,
-            'name': analysis.name
+            'name': analysis.name,
+            'label': disease.name if analysis.label != group or analysis.label == 'not_provided' else 'healthy'
         })
     return jsonify(data)
 
