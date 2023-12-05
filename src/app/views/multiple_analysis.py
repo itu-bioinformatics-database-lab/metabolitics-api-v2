@@ -22,6 +22,10 @@ import json
 @app.route('/excel', methods =['GET','POST'])
 def excel():
     data = request.json['data']
+    metabolites = []
+    for d in data:
+        if d[0] != None:
+            metabolites.append(d[0])
     meta = request.json['meta']
     processed_data = excel_data_Prpcessing(data,meta)
     new_data = group_avg(processed_data)
@@ -29,6 +33,7 @@ def excel():
         processed_data['analysis'][k] = v
     # processed_data['analysis']
     #print (processed_data)
+    processed_data['metabolites'] = metabolites
     return jsonify(processed_data)
 
 

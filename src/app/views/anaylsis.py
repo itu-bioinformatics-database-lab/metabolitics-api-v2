@@ -66,7 +66,8 @@ def fva_analysis():
     if not request.json:
         return "", 404
 
-    enhance_synonyms.delay(data)
+    if 'metabolites' in data:
+        enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
 
@@ -142,7 +143,8 @@ def fva_analysis_public():
     counter = 1
     check_value = len(list(request.json['analysis'].keys()))
 
-    enhance_synonyms.delay(data)
+    if 'metabolites' in data:
+        enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
 
@@ -217,7 +219,8 @@ def direct_pathway_mapping():
     if not request.json:
         return "", 404
 
-    enhance_synonyms.delay(data)
+    if 'metabolites' in data:
+        enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
 
@@ -296,7 +299,8 @@ def direct_pathway_mapping2():
     if not request.json:
         return "", 404
 
-    enhance_synonyms.delay(data)
+    if 'metabolites' in data:
+        enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
     user = User.query.filter_by(email='tajothman@std.sehir.edu.tr').first()
@@ -370,7 +374,8 @@ def pathway_enrichment():
     if not request.json:
         return "", 404
 
-    enhance_synonyms.delay(data)
+    if 'metabolites' in data:
+        enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
 
@@ -446,7 +451,8 @@ def pathway_enrichment2():
     if not request.json:
         return "", 404
 
-    enhance_synonyms.delay(data)
+    if 'metabolites' in data:
+        enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
     user = User.query.filter_by(email='tajothman@std.sehir.edu.tr').first()

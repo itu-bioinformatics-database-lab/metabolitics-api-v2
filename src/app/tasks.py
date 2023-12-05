@@ -48,30 +48,31 @@ def save_analysis(analysis_id, concentration_changes,registered=True,mail='none'
         send_mail(mail,study2+' Analysis Results',message)
 
 @celery.task()
-def enhance_synonyms(data):
+def enhance_synonyms(metabolites):
     print('Enhancing synonyms...')
     with open('../datasets/assets/synonyms.json') as f:
         synonyms = json.load(f, object_pairs_hook=OrderedDict)
-    for key, value in data['analysis'].items():
-        metabolites = value['Metabolites']
-        for metabolite in metabolites:
-            try:
-                if '_' not in metabolite:
-                    continue
-                bigg_id = metabolite[:metabolite.rindex('_')]
-                bigg_url = 'http://bigg.ucsd.edu/api/v2/universal/metabolites/' + bigg_id
-                bigg_response = requests.get(bigg_url).json()
-                chebi_links = bigg_response['database_links']['CHEBI']
-                for link in chebi_links:
-                    chebi_id = link['id']
-                    chebi_entity = ChebiEntity(chebi_id)
-                    chebi_synonyms = chebi_entity.get_names()
-                    for synonym in chebi_synonyms:
-                        synonym = synonym.get_name()
-                        if not synonym in synonyms.keys():
-                            synonyms.update({synonym : metabolite})
-            except:
-                pass
+    with open('../datasets/assets/refmet_recon3d.json') as f:
+        refmet_recon3d = json.load(f, object_pairs_hook=OrderedDict)
+    try:
+        metabolite_name = '\n'.join(metabolites)
+        params = {
+            "metabolite_name": metabolite_name
+        }
+        res = requests.post("https://www.metabolomicsworkbench.org/databases/refmet/name_to_refmet_new_min.php", data=params).text.split('\n')
+        res.pop(0)
+        for line in res:
+            if line == '':
+                continue
+            line = line.split('\t')
+            met = line[0]
+            ref = line[1]
+            if ref in refmet_recon3d.keys():
+                rec_id = refmet_recon3d[ref]
+                if met not in synonyms.keys():
+                    synonyms.update({met : rec_id})
+    except Exception as e:
+        print(e)
     with open('../datasets/assets/synonyms.json', 'w') as f:
         json.dump(synonyms, f, indent=4) 
     print("Enhancing synonyms done.")
