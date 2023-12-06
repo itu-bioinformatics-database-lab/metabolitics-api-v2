@@ -675,13 +675,25 @@ def analysis_details(type):
             for analysis in analyses:
                 analysis_data.append({'id': analysis[0], 'name': analysis[1], "start": analysis[3], "end": analysis[4]})
                 idss.append({'id':analysis[0]})
+            starts = [d['start'] for d in analysis_data if d['start'] != None]
+            ends = [d['end'] for d in analysis_data if d['end'] != None]
+            if len(starts) > 0:
+                start = min(starts)
+            else:
+                start = None
+            if len(ends) > 0:
+                end = max(ends)
+            else:
+                end = None
             returned_data.append({
                 'id': item.id,
                 'name': item.name,
                 'analyses': analysis_data,
                 'method': method.name,
                 'disease': disease.name,
-                'id2':idss
+                'id2':idss,
+                'start': start,
+                'end': end
             })
     # print(returned_data)
     return jsonify(returned_data)
