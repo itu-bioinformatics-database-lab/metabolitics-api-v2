@@ -681,7 +681,7 @@ def analysis_details(type):
                 start = min(starts)
             else:
                 start = None
-            if len(ends) > 0:
+            if len(ends) == len(analysis_data):
                 end = max(ends)
             else:
                 end = None
