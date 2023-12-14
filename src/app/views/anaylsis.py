@@ -109,7 +109,6 @@ def fva_analysis():
                 analysis.label = value['Label']
                 analysis.name = key
                 analysis.type = 'public' if request.json['public'] else "private"
-                analysis.start_time = datetime.datetime.now()
 
 
                 analysis.owner_user_id = user.id

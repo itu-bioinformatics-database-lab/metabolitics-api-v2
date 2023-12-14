@@ -154,7 +154,6 @@ class Analysis(db.Model):
         self.name = name
         self.status = status
         self.type = type
-        self.start_time = datetime.datetime.now()
         self.user = user
 
     def clean_name_tag(self, dataset):

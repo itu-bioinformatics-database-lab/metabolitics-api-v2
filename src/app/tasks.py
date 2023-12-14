@@ -20,6 +20,9 @@ from sklearn.model_selection import cross_val_score, StratifiedKFold
 @celery.task()
 def save_analysis(analysis_id, concentration_changes,registered=True,mail='none',study2='none'):
 
+    analysis = Analysis.query.get(analysis_id)
+    analysis.start_time = datetime.datetime.now()
+    db.session.commit()
     with open('../models/api_model.p', 'rb') as f:
         reaction_scaler = pickle.load(f)
 
@@ -33,7 +36,6 @@ def save_analysis(analysis_id, concentration_changes,registered=True,mail='none'
     results_reaction = reaction_scaler.transform([concentration_changes])
     results_pathway = pathway_scaler.transform(results_reaction)
 
-    analysis = Analysis.query.get(analysis_id)
 
     analysis.results_reaction = analysis.clean_name_tag(results_reaction)
     analysis.results_pathway = analysis.clean_name_tag(results_pathway)
