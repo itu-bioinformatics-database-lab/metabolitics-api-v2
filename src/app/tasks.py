@@ -16,6 +16,8 @@ from sklearn.linear_model import LogisticRegression
 from collections import OrderedDict
 from sklearn.model_selection import cross_val_score, StratifiedKFold
 import sys
+from .dpm import *
+from .pe import *
 
 
 @celery.task()
@@ -63,6 +65,68 @@ def save_analysis(analysis_id, concentration_changes,registered=True,mail='none'
     if registered != True:
         message = 'Hello, \n you can find your analysis results in the following link: \n http://metabolitics.itu.edu.tr/past-analysis/'+str(analysis_id)
         send_mail(mail,study2+' Analysis Results',message)
+
+@celery.task()
+def save_dpm(analysis_id, concentration_changes):
+
+    analysis = Analysis.query.get(analysis_id)
+    analysis.start_time = datetime.datetime.now()
+    db.session.commit()
+    
+    if analysis.label != 'not_provided':
+        group = Dataset.query.get(analysis.dataset_id).group
+        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == str(group).lower() + ' label avg').first()
+        healthy_data = MetabolomicsData.query.get(healthy).metabolomics_data
+        pipe = MetaboliticsPipeline([
+            'fold-change-scaler',
+        ])
+        for key, value in concentration_changes.items():
+            concentration_changes[key] = value if value != 0 else sys.float_info.min
+        for key, value in healthy_data.items():
+            healthy_data[key] = value if value != 0 else sys.float_info.min
+        fold_changes = pipe.fit_transform([concentration_changes, healthy_data], [analysis.label, 'healthy'])[0]
+    else:
+        fold_changes = concentration_changes
+    
+    analysis_runs = DirectPathwayMapping(fold_changes)  # Forming the instance
+    # fold_changes
+    analysis_runs.run()  # Making the analysis
+    analysis.results_pathway = [analysis_runs.result_pathways]
+    analysis.results_reaction = [analysis_runs.result_reactions]
+    analysis.end_time = datetime.datetime.now()
+
+    db.session.commit()
+
+@celery.task()
+def save_pe(analysis_id, concentration_changes):
+
+    analysis = Analysis.query.get(analysis_id)
+    analysis.start_time = datetime.datetime.now()
+    db.session.commit()
+    
+    if analysis.label != 'not_provided':
+        group = Dataset.query.get(analysis.dataset_id).group
+        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == str(group).lower() + ' label avg').first()
+        healthy_data = MetabolomicsData.query.get(healthy).metabolomics_data
+        pipe = MetaboliticsPipeline([
+            'fold-change-scaler',
+        ])
+        for key, value in concentration_changes.items():
+            concentration_changes[key] = value if value != 0 else sys.float_info.min
+        for key, value in healthy_data.items():
+            healthy_data[key] = value if value != 0 else sys.float_info.min
+        fold_changes = pipe.fit_transform([concentration_changes, healthy_data], [analysis.label, 'healthy'])[0]
+    else:
+        fold_changes = concentration_changes
+    
+    analysis_runs = PathwayEnrichment(fold_changes)  # Forming the instance
+    # fold_changes
+    analysis_runs.run()  # Making the analysis
+    analysis.results_pathway = [analysis_runs.result_pathways]
+    analysis.results_reaction = [analysis_runs.result_reactions]
+    analysis.end_time = datetime.datetime.now()
+
+    db.session.commit()
 
 @celery.task()
 def enhance_synonyms(metabolites):

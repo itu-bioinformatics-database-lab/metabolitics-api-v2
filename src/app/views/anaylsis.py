@@ -9,7 +9,7 @@ import time
 from ..app import app
 from ..schemas import *
 from ..models import db, User, Analysis, MetabolomicsData, Method, Dataset, Disease
-from ..tasks import save_analysis, enhance_synonyms
+from ..tasks import save_analysis, enhance_synonyms, save_dpm, save_pe
 from ..base import *
 from ..dpm import *
 import datetime
@@ -262,25 +262,17 @@ def direct_pathway_mapping():
                 analysis.name = key
                 # analysis.status = True
                 analysis.type = 'public' if request.json['public'] else "private"
-                analysis.start_time = datetime.datetime.now()
 
                 analysis.owner_user_id = user.id
                 analysis.owner_email = user.email
 
                 analysis.metabolomics_data_id = metabolomics_data.id
                 analysis.dataset_id = study.id
-                analysis_runs = DirectPathwayMapping(value["Metabolites"])  # Forming the instance
-                # fold_changes
-                analysis_runs.run()  # Making the analysis
-                analysis.results_pathway = [analysis_runs.result_pathways]
-                analysis.results_reaction = [analysis_runs.result_reactions]
-                analysis.end_time = datetime.datetime.now()
 
                 db.session.add(analysis)
                 db.session.commit()
+                save_dpm.delay(analysis.id, value["Metabolites"])
                 analysis_id = analysis.id
-
-
 
         return jsonify({'id': analysis_id})
 
@@ -417,22 +409,16 @@ def pathway_enrichment():
                 analysis.name = key
                 # analysis.status = True
                 analysis.type = 'public' if request.json['public'] else "private"
-                analysis.start_time = datetime.datetime.now()
 
                 analysis.owner_user_id = user.id
                 analysis.owner_email = user.email
 
                 analysis.metabolomics_data_id = metabolomics_data.id
                 analysis.dataset_id = study.id
-                analysis_runs = PathwayEnrichment(value["Metabolites"])  # Forming the instance
-                # fold_changes
-                analysis_runs.run()  # Making the analysis
-                analysis.results_pathway = [analysis_runs.result_pathways]
-                #analysis.results_reaction = [analysis_runs.result_reactions]
-                analysis.end_time = datetime.datetime.now()
 
                 db.session.add(analysis)
                 db.session.commit()
+                save_pe.delay(analysis.id, value["Metabolites"])                
                 analysis_id = analysis.id
 
 
