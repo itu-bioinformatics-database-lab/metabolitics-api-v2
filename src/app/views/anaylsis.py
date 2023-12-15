@@ -91,10 +91,24 @@ def fva_analysis():
         db.session.commit()
 
         analysis_id = 0
+        healthy_data = None
+        for key,value in data['analysis'].items():
+            if len(value['Metabolites']) > 0:
+                if value['Label'] == data['group'].lower() + ' label avg':
+                    healthy_data = value['Metabolites']
         for key,value in data["analysis"].items():  # user as key, value {metaboldata , label}
             if len(value['Metabolites']) > 0:
+                if healthy_data != None:
+                    pipe = MetaboliticsPipeline([
+                        'fold-change-scaler',
+                    ])
+                    for k, v in value["Metabolites"].items():
+                        value["Metabolites"][k] = v if v != 0 else sys.float_info.min
+                    for k, v in healthy_data.items():
+                        healthy_data[k] = v if v != 0 else sys.float_info.min
+                    X_t = pipe.fit_transform([value["Metabolites"], healthy_data], [value['Label'], 'healthy'])[0]
                 metabolomics_data = MetabolomicsData(
-                    metabolomics_data = value["Metabolites"],
+                    metabolomics_data = value["Metabolites"] if healthy_data == None else X_t,
                     owner_email = str(user),
                     is_public = True if request.json['public'] else False
                 )
@@ -118,7 +132,7 @@ def fva_analysis():
 
                 db.session.add(analysis)
                 db.session.commit()
-                save_analysis.delay(analysis.id, value["Metabolites"])
+                save_analysis.delay(analysis.id, value["Metabolites"] if healthy_data == None else X_t)
                 analysis_id = analysis.id
 
         return jsonify({'id': analysis_id})
@@ -242,12 +256,26 @@ def direct_pathway_mapping():
         db.session.add(study)
         db.session.commit()
         analysis_id = 0
+        healthy_data = None
+        for key,value in data['analysis'].items():
+            if len(value['Metabolites']) > 0:
+                if value['Label'] == data['group'].lower() + ' label avg':
+                    healthy_data = value['Metabolites']
         for key,value in data["analysis"].items():  # user as key, value {metaboldata , label}
 
             if len(value['Metabolites']) > 0:
 
+                if healthy_data != None:
+                    pipe = MetaboliticsPipeline([
+                        'fold-change-scaler',
+                    ])
+                    for k, v in value["Metabolites"].items():
+                        value["Metabolites"][k] = v if v != 0 else sys.float_info.min
+                    for k, v in healthy_data.items():
+                        healthy_data[k] = v if v != 0 else sys.float_info.min
+                    X_t = pipe.fit_transform([value["Metabolites"], healthy_data], [value['Label'], 'healthy'])[0]
                 metabolomics_data = MetabolomicsData(
-                    metabolomics_data = value["Metabolites"],
+                    metabolomics_data = value["Metabolites"] if healthy_data == None else X_t,
                     owner_email = str(user),
                     is_public = True if request.json['public'] else False
                 )
@@ -271,7 +299,7 @@ def direct_pathway_mapping():
 
                 db.session.add(analysis)
                 db.session.commit()
-                save_dpm.delay(analysis.id, value["Metabolites"])
+                save_dpm.delay(analysis.id, value["Metabolites"] if healthy_data == None else X_t)
                 analysis_id = analysis.id
 
         return jsonify({'id': analysis_id})
@@ -389,12 +417,25 @@ def pathway_enrichment():
         db.session.add(study)
         db.session.commit()
         analysis_id = 0
+        healthy_data = None
+        for key,value in data['analysis'].items():
+            if len(value['Metabolites']) > 0:
+                if value['Label'] == data['group'].lower() + ' label avg':
+                    healthy_data = value['Metabolites']
         for key,value in data["analysis"].items():  # user as key, value {metaboldata , label}
 
             if len(value['Metabolites']) > 0:
-
+                if healthy_data != None:
+                    pipe = MetaboliticsPipeline([
+                        'fold-change-scaler',
+                    ])
+                    for k, v in value["Metabolites"].items():
+                        value["Metabolites"][k] = v if v != 0 else sys.float_info.min
+                    for k, v in healthy_data.items():
+                        healthy_data[k] = v if v != 0 else sys.float_info.min
+                    X_t = pipe.fit_transform([value["Metabolites"], healthy_data], [value['Label'], 'healthy'])[0]
                 metabolomics_data = MetabolomicsData(
-                    metabolomics_data = value["Metabolites"],
+                    metabolomics_data = value["Metabolites"] if healthy_data == None else X_t,
                     owner_email = str(user),
                     is_public = True if request.json['public'] else False
                 )
@@ -418,7 +459,7 @@ def pathway_enrichment():
 
                 db.session.add(analysis)
                 db.session.commit()
-                save_pe.delay(analysis.id, value["Metabolites"])                
+                save_pe.delay(analysis.id, value["Metabolites"] if healthy_data == None else X_t)                
                 analysis_id = analysis.id
 
 
@@ -729,28 +770,13 @@ def analysis_detail(id):
     group = study.group
     method = Method.query.get(study.method_id)
     disease = Disease.query.get(study.disease_id)
-    if analysis.label != 'not_provided':
-        group, = db.session.query(Dataset.group).filter(Dataset.id == analysis.dataset_id).first()
-        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == str(group).lower() + ' label avg').first()
-        healthy_data = MetabolomicsData.query.get(healthy).metabolomics_data
-        pipe = MetaboliticsPipeline([
-            'fold-change-scaler'
-        ])
-        metabol_data = metabolomics_data.metabolomics_data
-        for key, value in metabol_data.items():
-            metabol_data[key] = value if value != 0 else sys.float_info.min
-        for key, value in healthy_data.items():
-            healthy_data[key] = value if value != 0 else sys.float_info.min
-        fold_changes = pipe.fit_transform([metabol_data, healthy_data], [analysis.label, 'healthy'])[0]
-    else:
-        fold_changes = metabolomics_data.metabolomics_data
     data = {
         'case_name': analysis.name,
         'status': study.status,
         'results_pathway': analysis.results_pathway,
         'results_reaction': analysis.results_reaction,
         'method': method.name,
-        'fold_changes': fold_changes,
+        'fold_changes': metabolomics_data.metabolomics_data,
         'study_name': study.name,
         'analyses': [],
         'disease': disease.name

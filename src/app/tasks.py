@@ -36,21 +36,7 @@ def save_analysis(analysis_id, concentration_changes,registered=True,mail='none'
         'transport-pathway-elimination'
     ])
     # print ("-----------------------1")
-    if analysis.label == 'not_provided':
-        results_reaction = reaction_scaler.transform([concentration_changes])
-    else:
-        group = Dataset.query.get(analysis.dataset_id).group
-        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == str(group).lower() + ' label avg').first()
-        healthy_data = MetabolomicsData.query.get(healthy).metabolomics_data
-        pipe = MetaboliticsPipeline([
-            'fold-change-scaler',
-        ])
-        for key, value in concentration_changes.items():
-            concentration_changes[key] = value if value != 0 else sys.float_info.min
-        for key, value in healthy_data.items():
-            healthy_data[key] = value if value != 0 else sys.float_info.min
-        X_t = pipe.fit_transform([concentration_changes, healthy_data], [analysis.label, 'healthy'])[0]
-        results_reaction = reaction_scaler.transform([X_t])
+    results_reaction = reaction_scaler.transform([concentration_changes])
     results_pathway = pathway_scaler.transform(results_reaction)
 
 
@@ -73,22 +59,8 @@ def save_dpm(analysis_id, concentration_changes):
     analysis.start_time = datetime.datetime.now()
     db.session.commit()
     
-    if analysis.label != 'not_provided':
-        group = Dataset.query.get(analysis.dataset_id).group
-        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == str(group).lower() + ' label avg').first()
-        healthy_data = MetabolomicsData.query.get(healthy).metabolomics_data
-        pipe = MetaboliticsPipeline([
-            'fold-change-scaler',
-        ])
-        for key, value in concentration_changes.items():
-            concentration_changes[key] = value if value != 0 else sys.float_info.min
-        for key, value in healthy_data.items():
-            healthy_data[key] = value if value != 0 else sys.float_info.min
-        fold_changes = pipe.fit_transform([concentration_changes, healthy_data], [analysis.label, 'healthy'])[0]
-    else:
-        fold_changes = concentration_changes
     
-    analysis_runs = DirectPathwayMapping(fold_changes)  # Forming the instance
+    analysis_runs = DirectPathwayMapping(concentration_changes)  # Forming the instance
     # fold_changes
     analysis_runs.run()  # Making the analysis
     analysis.results_pathway = [analysis_runs.result_pathways]
@@ -104,22 +76,8 @@ def save_pe(analysis_id, concentration_changes):
     analysis.start_time = datetime.datetime.now()
     db.session.commit()
     
-    if analysis.label != 'not_provided':
-        group = Dataset.query.get(analysis.dataset_id).group
-        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == str(group).lower() + ' label avg').first()
-        healthy_data = MetabolomicsData.query.get(healthy).metabolomics_data
-        pipe = MetaboliticsPipeline([
-            'fold-change-scaler',
-        ])
-        for key, value in concentration_changes.items():
-            concentration_changes[key] = value if value != 0 else sys.float_info.min
-        for key, value in healthy_data.items():
-            healthy_data[key] = value if value != 0 else sys.float_info.min
-        fold_changes = pipe.fit_transform([concentration_changes, healthy_data], [analysis.label, 'healthy'])[0]
-    else:
-        fold_changes = concentration_changes
     
-    analysis_runs = PathwayEnrichment(fold_changes)  # Forming the instance
+    analysis_runs = PathwayEnrichment(concentration_changes)  # Forming the instance
     # fold_changes
     analysis_runs.run()  # Making the analysis
     analysis.results_pathway = [analysis_runs.result_pathways]
