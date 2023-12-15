@@ -15,6 +15,7 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LogisticRegression
 from collections import OrderedDict
 from sklearn.model_selection import cross_val_score, StratifiedKFold
+import sys
 
 
 @celery.task()
@@ -33,7 +34,21 @@ def save_analysis(analysis_id, concentration_changes,registered=True,mail='none'
         'transport-pathway-elimination'
     ])
     # print ("-----------------------1")
-    results_reaction = reaction_scaler.transform([concentration_changes])
+    if analysis.label == 'not_provided':
+        results_reaction = reaction_scaler.transform([concentration_changes])
+    else:
+        group = Dataset.query.get(analysis.dataset_id).group
+        healthy = db.session.query(Analysis.metabolomics_data_id).filter(Analysis.dataset_id == analysis.dataset_id).filter(Analysis.label == str(group).lower() + ' label avg').first()
+        healthy_data = MetabolomicsData.query.get(healthy).metabolomics_data
+        pipe = MetaboliticsPipeline([
+            'fold-change-scaler',
+        ])
+        for key, value in concentration_changes.items():
+            concentration_changes[key] = value if value != 0 else sys.float_info.min
+        for key, value in healthy_data.items():
+            healthy_data[key] = value if value != 0 else sys.float_info.min
+        X_t = pipe.fit_transform([concentration_changes, healthy_data], [analysis.label, 'healthy'])[0]
+        results_reaction = reaction_scaler.transform([X_t])
     results_pathway = pathway_scaler.transform(results_reaction)
 
 
