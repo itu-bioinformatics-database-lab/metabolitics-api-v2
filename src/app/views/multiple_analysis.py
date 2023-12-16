@@ -24,7 +24,7 @@ def excel():
     data = request.json['data']
     metabolites = []
     for d in data:
-        if d[0] != None:
+        if d != [] and d[0] != None:
             metabolites.append(d[0])
     meta = request.json['meta']
     processed_data = excel_data_Prpcessing(data,meta)
