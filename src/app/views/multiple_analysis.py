@@ -15,6 +15,8 @@ import datetime
 import mwtab
 from timeit import default_timer as timer
 import json
+from collections import OrderedDict
+import requests
 
 
 ############################### Excel codes below
@@ -26,6 +28,7 @@ def excel():
     for d in data:
         if d != [] and d[0] != None:
             metabolites.append(d[0])
+    enhance_synonyms(metabolites)
     meta = request.json['meta']
     processed_data = excel_data_Prpcessing(data,meta)
     new_data = group_avg(processed_data)
@@ -36,7 +39,32 @@ def excel():
     processed_data['metabolites'] = metabolites
     return jsonify(processed_data)
 
-
+def enhance_synonyms(metabolites):
+    with open('../datasets/assets/synonyms.json') as f:
+        synonyms = json.load(f, object_pairs_hook=OrderedDict)
+    with open('../datasets/assets/refmet_recon3d.json') as f:
+        refmet_recon3d = json.load(f, object_pairs_hook=OrderedDict)
+    try:
+        metabolite_name = '\n'.join(metabolites)
+        params = {
+            "metabolite_name": metabolite_name
+        }
+        res = requests.post("https://www.metabolomicsworkbench.org/databases/refmet/name_to_refmet_new_min.php", data=params).text.split('\n')
+        res.pop(0)
+        for line in res:
+            if line == '':
+                continue
+            line = line.split('\t')
+            met = line[0]
+            ref = line[1]
+            if ref in refmet_recon3d.keys():
+                rec_id = refmet_recon3d[ref]
+                if met not in synonyms.keys():
+                    synonyms.update({met : rec_id})
+    except Exception as e:
+        print(e)
+    with open('../datasets/assets/synonyms.json', 'w') as f:
+        json.dump(synonyms, f, indent=4)
 
 def metabolc(data):
     """

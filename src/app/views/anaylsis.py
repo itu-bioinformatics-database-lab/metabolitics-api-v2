@@ -66,8 +66,8 @@ def fva_analysis():
     if not request.json:
         return "", 404
 
-    if 'metabolites' in data:
-        enhance_synonyms.delay(data['metabolites'])
+    # if 'metabolites' in data:
+    #     enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
 
@@ -156,8 +156,8 @@ def fva_analysis_public():
     counter = 1
     check_value = len(list(request.json['analysis'].keys()))
 
-    if 'metabolites' in data:
-        enhance_synonyms.delay(data['metabolites'])
+    # if 'metabolites' in data:
+    #     enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
 
@@ -232,8 +232,8 @@ def direct_pathway_mapping():
     if not request.json:
         return "", 404
 
-    if 'metabolites' in data:
-        enhance_synonyms.delay(data['metabolites'])
+    # if 'metabolites' in data:
+    #     enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
 
@@ -318,8 +318,8 @@ def direct_pathway_mapping2():
     if not request.json:
         return "", 404
 
-    if 'metabolites' in data:
-        enhance_synonyms.delay(data['metabolites'])
+    # if 'metabolites' in data:
+    #     enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
     user = User.query.filter_by(email='tajothman@std.sehir.edu.tr').first()
@@ -393,8 +393,8 @@ def pathway_enrichment():
     if not request.json:
         return "", 404
 
-    if 'metabolites' in data:
-        enhance_synonyms.delay(data['metabolites'])
+    # if 'metabolites' in data:
+    #     enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
 
@@ -477,8 +477,8 @@ def pathway_enrichment2():
     if not request.json:
         return "", 404
 
-    if 'metabolites' in data:
-        enhance_synonyms.delay(data['metabolites'])
+    # if 'metabolites' in data:
+    #     enhance_synonyms.delay(data['metabolites'])
 
     data = checkMapped(data)
     user = User.query.filter_by(email='tajothman@std.sehir.edu.tr').first()
@@ -619,12 +619,13 @@ def most_similar_diseases(id: int):
     if not analysis.authenticated():
         return '', 401
     analysis_method_id = Dataset.query.get(analysis.dataset_id).method_id
-    groups = db.session.query(Dataset.group).filter(Dataset.group != 'not_provided').all()
+    groups = db.session.query(Dataset.group).all()
     groups = [group[0] for group in groups]
-    group_avgs = [str(group).lower() + ' label avg' for group in groups]
-
     public_analyses = db.session.query(Analysis).join(Dataset).join(Disease).filter(
-        Analysis.type == 'public').filter(Dataset.method_id == analysis_method_id).filter(Analysis.results_pathway != None).filter(or_(Analysis.label == 'not_provided', and_(~Analysis.label.in_(group_avgs), Analysis.label.like('%label avg%')))).with_entities(Disease.name, Analysis.results_pathway).all()
+        Analysis.type == 'public').filter(Dataset.method_id == analysis_method_id).filter(
+            Analysis.results_pathway != None).filter(
+                or_(Analysis.label == 'not_provided', and_(~Analysis.label.in_(groups), ~Analysis.label.like('%label avg%')))).with_entities(
+                    Disease.name, Analysis.results_pathway).all()
     diseases = [i[0] for i in public_analyses]
     results_pathways = [i[1][0] for i in public_analyses]
     similarities = similarty_dict(analysis.results_pathway[0], results_pathways)
