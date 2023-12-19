@@ -122,6 +122,7 @@ def train_save_model():
     disease_ids = db.session.query(Dataset.disease_id).filter(Dataset.group != 'not_provided').filter(Dataset.method_id == 1).distinct()
     for disease_id in disease_ids:
         disease_name = Disease.query.get(disease_id).name
+        disease_synonym = Disease.query.get(disease_id).synonym
         dataset_ids = db.session.query(Dataset.id).filter(Dataset.disease_id == disease_id).filter(
             Dataset.group != 'not_provided').filter(Dataset.method_id == 1).all()
         results_reactions_labels = db.session.query(Analysis).filter(Analysis.label.notlike('%label avg%')).filter(
@@ -144,7 +145,7 @@ def train_save_model():
             scores = cross_val_score(pipe, results_reactions, labels, cv=kfold, n_jobs=None, scoring='f1_micro')
             score = scores.mean().round(3)
             save = {}
-            save['disease_name'] = disease_name
+            save['disease_name'] = str(disease_name) + ' (' + disease_synonym + ')'
             save['model'] = model
             save['score'] = score
             with open(path, 'wb') as f:
