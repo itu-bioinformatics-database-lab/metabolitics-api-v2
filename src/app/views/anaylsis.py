@@ -735,7 +735,8 @@ def analysis_details(type):
                 'id2':idss,
                 'start': start,
                 'end': end,
-                'avg_id': analysis_data[0]['id'] if avg_index == -1 else analysis_data[avg_index]['id']
+                'avg_id': analysis_data[0]['id'] if avg_index == -1 else analysis_data[avg_index]['id'],
+                'progress': round(len(ends) / len(analysis_data) * 100) 
             })
     # print(returned_data)
     return jsonify(returned_data)
@@ -798,7 +799,8 @@ def user_analysis():
                     'disease': disease.name,
                     'start': start,
                     'end': end,
-                    'avg_id': analysis_data[0]['id'] if avg_index == -1 else analysis_data[avg_index]['id']
+                    'avg_id': analysis_data[0]['id'] if avg_index == -1 else analysis_data[avg_index]['id'],
+                    'progress': round(len(ends) / len(analysis_data) * 100) 
                 })
 
     return jsonify(returned_data)
