@@ -23,6 +23,7 @@ class DOParser:
                            "tick-borne_infectious_disease",
                            "zoonotic_infectious_disease"]
         self.diseases = {} # {file_name: [Disease Name]}
+        self.disease_synonym = []
 
     def parse(self, name):
         '''
@@ -39,8 +40,9 @@ class DOParser:
             if 'synonyms' in node['meta'].keys():
                 for synonym in node['meta']['synonyms']:
                     self.diseases.setdefault(name, [])
-                    if synonym['val'] not in self.diseases:
+                    if synonym['val'] not in self.diseases and (node['lbl'] + synonym['val']) not in self.disease_synonym:
                         self.diseases[name].append({'name': node['lbl'], 'synonym': synonym['val']})
+                        self.disease_synonym.append(node['lbl'] + synonym['val'])
 
     def start(self):
         '''
