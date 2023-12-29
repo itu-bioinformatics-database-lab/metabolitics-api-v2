@@ -686,7 +686,7 @@ def disease_prediction(id: int):
             prediction = model.predict([results_reaction])[0]
             if prediction != 'healthy':
                 predictions.append({'disease_name' : disease_name, 'score': round(score, 3)})
-    return jsonify(sorted(predictions, key=lambda p: p['score']))
+    return jsonify(sorted(predictions, key=lambda p: p['score'], reverse=True))
 
 @app.route('/analysis/<type>')
 def analysis_details(type):
