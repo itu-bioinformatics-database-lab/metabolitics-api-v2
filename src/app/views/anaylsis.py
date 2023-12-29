@@ -625,8 +625,8 @@ def most_similar_diseases(id: int):
         Analysis.type == 'public').filter(Dataset.method_id == analysis_method_id).filter(
             Analysis.results_pathway != None).filter(
                 or_(Analysis.label == 'not_provided', and_(~Analysis.label.in_(groups), ~Analysis.label.like('%label avg%')))).with_entities(
-                    Disease.name, Analysis.results_pathway).all()
-    diseases = [i[0] for i in public_analyses]
+                    Disease.name, Analysis.results_pathway, Disease.synonym).all()
+    diseases = [i[0] + ' (' + i[2] + ')' for i in public_analyses]
     results_pathways = [i[1][0] for i in public_analyses]
     similarities = similarty_dict(analysis.results_pathway[0], results_pathways)
     dis_sim = zip(diseases, similarities)
@@ -682,11 +682,11 @@ def disease_prediction(id: int):
             saved = pickle.load(open(path, 'rb'))
             disease_name = saved['disease_name']
             model = saved['model']
-            score = saved['score']
+            score = model.decision_function([results_reaction])[0]
             prediction = model.predict([results_reaction])[0]
             if prediction != 'healthy':
-                predictions.append({'disease_name' : disease_name, 'score': score})
-    return jsonify(predictions)
+                predictions.append({'disease_name' : disease_name, 'score': round(score, 3)})
+    return jsonify(sorted(predictions, key=lambda p: p['score']))
 
 @app.route('/analysis/<type>')
 def analysis_details(type):
