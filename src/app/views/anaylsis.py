@@ -620,11 +620,11 @@ def most_similar_diseases(id: int):
         return '', 401
     analysis_method_id = Dataset.query.get(analysis.dataset_id).method_id
     groups = db.session.query(Dataset.group).all()
-    groups = [group[0] for group in groups]
+    groups = [group[0].lower() + ' label avg' for group in groups]
     public_analyses = db.session.query(Analysis).join(Dataset).join(Disease).filter(
         Analysis.type == 'public').filter(Dataset.method_id == analysis_method_id).filter(
             Analysis.results_pathway != None).filter(
-                or_(Analysis.label == 'not_provided', and_(~Analysis.label.in_(groups), ~Analysis.label.like('%label avg%')))).with_entities(
+                or_(Analysis.label == 'not_provided', and_(Analysis.label.like('%label avg%'), ~Analysis.label.in_(groups)))).with_entities(
                     Disease.name, Analysis.results_pathway, Disease.synonym).all()
     diseases = [i[0] + ' (' + i[2] + ')' for i in public_analyses]
     results_pathways = [i[1][0] for i in public_analyses]
