@@ -691,8 +691,6 @@ def disease_prediction(id: int):
 
 @app.route('/analysis/<type>')
 def analysis_details(type):
-    # print('reached')
-    idss = [] # for expanding menu
     data = Dataset.query.all()
     returned_data = []
     for item in data:
@@ -702,12 +700,22 @@ def analysis_details(type):
         disease = Disease.query.get(item.disease_id)
         group = item.group
         if len(list(analyses)) > 0:
+            avg_id = -1
             analysis_data = []
+            starts = []
+            ends = []
             for analysis in analyses:
+                if group != 'not_provided':
+                    if str(group).lower() + ' label avg' == analysis[1]:
+                        continue
                 analysis_data.append({'id': analysis[0], 'name': analysis[1], "start": analysis[3], "end": analysis[4]})
-                idss.append({'id':analysis[0]})
-            starts = [d['start'] for d in analysis_data if d['start'] != None]
-            ends = [d['end'] for d in analysis_data if d['end'] != None]
+                if analysis[3] != None:
+                    starts.append(analysis[3])
+                if analysis[4] != None:
+                    ends.append(analysis[4])
+                if group != 'not_provided':
+                    if ' label avg' in analysis[1]:
+                        avg_id = analysis[0]
             if len(starts) > 0:
                 start = min(starts)
             else:
@@ -716,27 +724,15 @@ def analysis_details(type):
                 end = max(ends)
             else:
                 end = None
-            avg_index = -1
-            if group != 'not_provided':
-                healthy_index = -1
-                for i,a in enumerate(analysis_data):
-                    if str(group).lower() + ' label avg' == a['name']:
-                        healthy_index = i
-                if healthy_index != -1:
-                    analysis_data.pop(healthy_index)
-                for i,a in enumerate(analysis_data):
-                    if ' label avg' in a['name']:
-                        avg_index = i
             returned_data.append({
                 'id': item.id,
                 'name': item.name,
                 'analyses': analysis_data,
                 'method': method.name,
                 'disease': disease.name,
-                'id2':idss,
                 'start': start,
                 'end': end,
-                'avg_id': analysis_data[0]['id'] if avg_index == -1 else analysis_data[avg_index]['id'],
+                'avg_id': analysis_data[0]['id'] if avg_id == -1 else avg_id,
                 'progress': round(len(ends) / len(analysis_data) * 100) 
             })
     # print(returned_data)
@@ -768,11 +764,22 @@ def user_analysis():
             disease = Disease.query.get(item.disease_id)
             group = item.group
             if len(list(analyses)) > 0:
+                avg_id = -1
                 analysis_data = []
+                starts = []
+                ends = []
                 for analysis in analyses:
+                    if group != 'not_provided':
+                        if str(group).lower() + ' label avg' == analysis[1]:
+                            continue
                     analysis_data.append({'id': analysis[0], 'name': analysis[1], 'start': analysis[3], 'end': analysis[4]})
-                starts = [d['start'] for d in analysis_data if d['start'] != None]
-                ends = [d['end'] for d in analysis_data if d['end'] != None]
+                    if analysis[3] != None:
+                        starts.append(analysis[3])
+                    if analysis[4] != None:
+                        ends.append(analysis[4])
+                    if group != 'not_provided':
+                        if ' label avg' in analysis[1]:
+                            avg_id = analysis[0]
                 if len(starts) > 0:
                     start = min(starts)
                 else:
@@ -781,17 +788,6 @@ def user_analysis():
                     end = max(ends)
                 else:
                     end = None
-                avg_index = -1
-                if group != 'not_provided':
-                    healthy_index = -1
-                    for i,a in enumerate(analysis_data):
-                        if str(group).lower() + ' label avg' == a['name']:
-                            healthy_index = i
-                    if healthy_index != -1:
-                        analysis_data.pop(healthy_index)
-                    for i,a in enumerate(analysis_data):
-                        if ' label avg' in a['name']:
-                            avg_index = i
                 returned_data.append({
                     'id': item.id,
                     'name': item.name,
@@ -800,7 +796,7 @@ def user_analysis():
                     'disease': disease.name,
                     'start': start,
                     'end': end,
-                    'avg_id': analysis_data[0]['id'] if avg_index == -1 else analysis_data[avg_index]['id'],
+                    'avg_id': analysis_data[0]['id'] if avg_id == -1 else avg_id,
                     'progress': round(len(ends) / len(analysis_data) * 100) 
                 })
 
