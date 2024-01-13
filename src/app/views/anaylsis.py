@@ -828,12 +828,22 @@ def analysis_detail(id):
     analyses = Analysis.query.filter_by(dataset_id=study.id)
     for analysis in analyses:
         if analysis.label == str(group).lower() + ' label avg':
+            healthy = {'id': analysis.id, 'name': analysis.name, 'label': 'Healthy'}
             continue
         data['analyses'].append({
             'id': analysis.id,
             'name': analysis.name,
             'label': disease.name if analysis.label != group or analysis.label == 'not_provided' else 'healthy'
         })
+    data['analyses'].sort(key=lambda s: (len(s['name']), s['name']))
+    for i, a in enumerate(data['analyses']):
+        if ' label avg' in a['name']:
+            index = i
+    avg = data['analyses'][index]
+    avg['Label'] = disease.name
+    data['analyses'].pop(index)
+    data['analyses'].insert(0, avg)
+    data['analyses'].insert(1, healthy)
     return jsonify(data)
 
 
