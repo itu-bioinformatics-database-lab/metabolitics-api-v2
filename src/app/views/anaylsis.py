@@ -831,15 +831,16 @@ def analysis_detail(id):
             'name': analysis.name,
             'label': disease.name if analysis.label != group or analysis.label == 'not_provided' else 'healthy'
         })
-    data['analyses'].sort(key=lambda s: (len(s['name']), s['name']))
-    for i, a in enumerate(data['analyses']):
-        if ' label avg' in a['name']:
-            index = i
-    avg = data['analyses'][index]
-    avg['Label'] = disease.name
-    data['analyses'].pop(index)
-    data['analyses'].insert(0, avg)
-    data['analyses'].insert(1, healthy)
+    if group != 'not_provided':
+        data['analyses'].sort(key=lambda s: (len(s['name']), s['name']))
+        for i, a in enumerate(data['analyses']):
+            if ' label avg' in a['name']:
+                index = i
+        avg = data['analyses'][index]
+        avg['Label'] = disease.name
+        data['analyses'].pop(index)
+        data['analyses'].insert(0, avg)
+        data['analyses'].insert(1, healthy)
     return jsonify(data)
 
 
