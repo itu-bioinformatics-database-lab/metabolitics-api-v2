@@ -579,7 +579,7 @@ def analysis_visualization():
     # for i in analyses:
         # print(i.results_pathway[0])
     X = [i.results_pathway[0] for i in analyses]
-    y = [i.name for i in analyses]
+    y = [Disease.query.get(Dataset.query.get(i.dataset_id).disease_id).name.title() for i in analyses]
 
     return jsonify(HeatmapVisualization(X, y).clustered_data())
     # return AnalysisSchema(many=True).jsonify(analyses)
