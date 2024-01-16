@@ -71,6 +71,7 @@ def metabolc(data):
     this function takes data from excel sheet and return a list of metabolites in the sheet
     """
     metabols = []
+    metabols2 = {}
     mapping_metabolites = {}
     isMapped = {}
 
@@ -95,12 +96,14 @@ def metabolc(data):
             if data[k][0] in mapping_data1.keys():
                 metabols.append(data[k][0])
                 isMapped[data[k][0]] = {'isMapped':True}
+                metabols2[data[k][0]] = data[k][0]
 
             elif data[k][0] in mapping_data2.keys():
                 temp = mapping_data2[data[k][0]]
                 temp = temp[0] if type(temp) is list else temp
                 metabols.append(temp)
                 isMapped[temp] = {'isMapped': True}
+                metabols2[temp] = data[k][0]
 
             # elif data[k][0] in mapping_metabolites.keys():
             #     metabols.append(mapping_metabolites[data[k][0]])
@@ -111,10 +114,11 @@ def metabolc(data):
                 temp = temp[0] if type(temp) is list else temp
                 metabols.append(temp)
                 isMapped[temp] = {'isMapped':False}
+                metabols2[temp] = data[k][0]
 
 
 
-    return [metabols,isMapped]
+    return [metabols,isMapped,metabols2]
 
 
 
@@ -166,7 +170,7 @@ def excel_data_Prpcessing(data, meta):
 
     users_metabolite = {}
     data2 = user_metabol(data)
-    metabol,isMapped = metabolc(data)
+    metabol,isMapped,metabol2 = metabolc(data)
 
     for key, value in data2.items():
         temp = {}
@@ -177,7 +181,7 @@ def excel_data_Prpcessing(data, meta):
         users_metabolite[key] = {"Metabolites": temp, "Label": users_labels[key]}
     #
     processed_users_data = {"study_name": study_name, "group": group_control_label,
-                            "analysis": users_metabolite,'isMapped':isMapped}
+                            "analysis": users_metabolite,'isMapped':isMapped, 'metabol':metabol2}
 
     return processed_users_data
 
