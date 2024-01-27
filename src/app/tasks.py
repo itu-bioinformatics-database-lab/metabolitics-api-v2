@@ -15,6 +15,7 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LogisticRegression
 from collections import OrderedDict
 from sklearn.model_selection import cross_val_score, StratifiedKFold
+from sklearn.metrics import f1_score
 import sys
 from .dpm import *
 from .pe import *
@@ -132,7 +133,7 @@ def train_save_model():
         labels = [value[1] for value in results_reactions_labels]
         groups = db.session.query(Dataset.group).filter(Dataset.id.in_(dataset_ids)).all()
         groups = [group[0] for group in groups]
-        labels = ['healthy' if label in groups else label for label in labels]
+        labels = ['healthy' if label in groups else disease_name for label in labels]
         path = '../trained_models/' + disease_name.replace(' ', '_') + '_' + str(disease_id[0]) + '_model.p'
         try:
             pipe = Pipeline([
@@ -141,13 +142,12 @@ def train_save_model():
                 ('clf', LogisticRegression(C=0.3e-6, random_state=43, solver='lbfgs'))
             ])
             model = pipe.fit(results_reactions, labels)
-            kfold = StratifiedKFold(n_splits=2, shuffle=True, random_state=43)
-            scores = cross_val_score(pipe, results_reactions, labels, cv=kfold, n_jobs=None, scoring='f1_micro')
-            score = scores.mean().round(3)
+            pred = model.predict(results_reactions)
+            score = f1_score(labels, pred, average='binary', pos_label='healthy')
             save = {}
             save['disease_name'] = str(disease_name) + ' (' + disease_synonym + ')'
             save['model'] = model
-            save['score'] = score
+            save['f1_score'] = score
             with open(path, 'wb') as f:
                 pickle.dump(save, f)
         except Exception as e:
