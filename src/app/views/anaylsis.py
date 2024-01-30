@@ -682,11 +682,12 @@ def disease_prediction(id: int):
             saved = pickle.load(open(path, 'rb'))
             disease_name = saved['disease_name']
             model = saved['model']
+            f1_score = saved['f1_score']
             prediction = model.predict([results_reaction])[0]
-            score = model.predict_proba([results_reaction])[0]
-            score = max(score)
+            pred_score = model.predict_proba([results_reaction])[0]
+            pred_score = max(pred_score)
             if prediction != 'healthy':
-                predictions.append({'disease_name' : disease_name, 'score': round(score, 3)})
+                predictions.append({'disease_name' : disease_name, 'pred_score': round(pred_score, 3), 'f1_score': round(f1_score, 3)})
     return jsonify(sorted(predictions, key=lambda p: p['score'], reverse=True))
 
 @app.route('/analysis/<type>')
