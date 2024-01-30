@@ -11,11 +11,11 @@ This is the updated version of Metabolitics API.
 
     `conda config --append channels conda-forge`
 
-    `conda create --name env python=3.5.2`
+    `conda create --name menv python=3.5.2`
 
-    `conda activate env`
+    `conda activate menv`
 
-3. Install required Python packages under **src** directory.
+3. Install required Python packages.
 
     `pip install -r requirements.txt`
 
