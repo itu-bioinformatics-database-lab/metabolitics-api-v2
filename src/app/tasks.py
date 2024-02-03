@@ -133,7 +133,7 @@ def train_save_model():
         labels = [value[1] for value in results_reactions_labels]
         groups = db.session.query(Dataset.group).filter(Dataset.id.in_(dataset_ids)).all()
         groups = [group[0] for group in groups]
-        labels = ['healthy' if label in groups else disease_name for label in labels]
+        labels = [0 if label in groups else 1 for label in labels]
         path = '../trained_models/' + disease_name.replace(' ', '_') + '_' + str(disease_id[0]) + '_model.p'
         try:
             pipe = Pipeline([
@@ -142,12 +142,21 @@ def train_save_model():
                 ('clf', LogisticRegression(C=0.3e-6, random_state=43, solver='lbfgs'))
             ])
             model = pipe.fit(results_reactions, labels)
-            pred = model.predict(results_reactions)
-            score = f1_score(labels, pred, average='binary', pos_label='healthy')
             save = {}
             save['disease_name'] = str(disease_name) + ' (' + disease_synonym + ')'
             save['model'] = model
-            save['f1_score'] = score
+            size = len(labels)
+            if size < 50:
+                kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=43)
+            elif size < 75:
+                kf = StratifiedKFold(n_splits=3, shuffle=True, random_state=43)
+            elif size < 100:
+                kf = StratifiedKFold(n_splits=5, shuffle=True, random_state=43)
+            else:
+                kf = StratifiedKFold(n_splits=10, shuffle=True, random_state=43)
+            for scoring in ['precision', 'recall', 'f1']:
+                score = cross_val_score(estimator=pipe, X=results_reactions, y=labels, cv=kf, scoring=scoring).mean()
+                save[scoring] = score
             with open(path, 'wb') as f:
                 pickle.dump(save, f)
         except Exception as e:
