@@ -682,12 +682,11 @@ def disease_prediction(id: int):
             saved = pickle.load(open(path, 'rb'))
             disease_name = saved['disease_name']
             model = saved['model']
-            f1_score = saved['f1_score']
             prediction = model.predict([results_reaction])[0]
             pred_score = model.predict_proba([results_reaction])[0]
             pred_score = max(pred_score)
-            if prediction != 'healthy':
-                predictions.append({'disease_name' : disease_name, 'pred_score': round(pred_score, 3), 'f1_score': round(f1_score, 3)})
+            if prediction != 0:
+                predictions.append({'disease_name' : disease_name, 'pred_score': round(pred_score, 3)})
     return jsonify(sorted(predictions, key=lambda p: p['pred_score'], reverse=True))
 
 @app.route('/analysis/<type>')
@@ -1026,3 +1025,20 @@ def checkMapped(data):
                 output['analysis'][case] = temp
         print(output)
         return output
+
+@app.route('/models/all', methods=['GET'])
+def get_model_scores():
+    scores = {}
+    dir = '../trained_models'
+    for file in os.listdir(dir):
+        if file == '.keep':
+            continue
+        path = os.path.join(dir, file)
+        if os.path.isfile(path):
+            saved = pickle.load(open(path, 'rb'))
+            disease_name = saved['disease_name']
+            precision = saved['precision']
+            recall = saved['recall']
+            f1 = saved['f1']
+            scores[disease_name] = {'precision': precision, 'recall': recall, 'f1': f1}
+    return jsonify(scores)
