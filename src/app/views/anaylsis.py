@@ -673,21 +673,24 @@ def disease_prediction(id: int):
         return '', 401
     results_reaction = analysis.results_reaction[0]
     dir = '../trained_models'
-    predictions = []
+    preds = []
     for file in os.listdir(dir):
         if file == '.keep':
             continue
         path = os.path.join(dir, file)
         if os.path.isfile(path):
-            saved = pickle.load(open(path, 'rb'))
-            disease_name = saved['disease_name']
-            model = saved['model']
-            prediction = model.predict([results_reaction])[0]
-            pred_score = model.predict_proba([results_reaction])[0]
-            pred_score = max(pred_score)
-            if prediction != 0:
-                predictions.append({'disease_name' : disease_name, 'pred_score': round(pred_score, 3)})
-    return jsonify(sorted(predictions, key=lambda p: p['pred_score'], reverse=True))
+            try:
+                saved = pickle.load(open(path, 'rb'))
+                disease = saved['disease']
+                model = saved['model']
+                pred = model.predict([results_reaction])[0]
+                pred_score = model.predict_proba([results_reaction])[0]
+                pred_score = max(pred_score)
+                if pred != 0:
+                    preds.append({'disease' : disease, 'pred_score': round(pred_score, 3)})
+            except Exception as e:
+                print(e)
+    return jsonify(sorted(preds, key=lambda p: p['pred_score'], reverse=True))
 
 @app.route('/analysis/<type>')
 def analysis_details(type):
@@ -1035,10 +1038,13 @@ def get_model_scores():
             continue
         path = os.path.join(dir, file)
         if os.path.isfile(path):
-            saved = pickle.load(open(path, 'rb'))
-            disease_name = saved['disease_name']
-            precision = saved['precision']
-            recall = saved['recall']
-            f1 = saved['f1']
-            scores[disease_name] = {'precision': precision, 'recall': recall, 'f1': f1}
+            try:
+                saved = pickle.load(open(path, 'rb'))
+                disease = saved['disease']
+                precision = saved['precision']
+                recall = saved['recall']
+                f1 = saved['f1']
+                scores[disease] = {'precision': precision, 'recall': recall, 'f1': f1}
+            except Exception as e:
+                print(e)
     return jsonify(scores)
