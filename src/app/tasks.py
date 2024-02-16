@@ -19,6 +19,10 @@ from sklearn.metrics import f1_score
 import sys
 from .dpm import *
 from .pe import *
+from sklearn_utils.preprocessing import *
+from sklearn.feature_selection import VarianceThreshold, SelectKBest
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
 
 
 @celery.task()
@@ -121,42 +125,54 @@ def enhance_synonyms(metabolites):
 def train_save_model():
     print('Training and saving models...')
     disease_ids = db.session.query(Dataset.disease_id).filter(Dataset.group != 'not_provided').filter(Dataset.method_id == 1).distinct()
-    for disease_id in disease_ids:
+    for disease_id, in disease_ids:
         disease_name = Disease.query.get(disease_id).name
         disease_synonym = Disease.query.get(disease_id).synonym
         dataset_ids = db.session.query(Dataset.id).filter(Dataset.disease_id == disease_id).filter(
             Dataset.group != 'not_provided').filter(Dataset.method_id == 1).all()
-        results_reactions_labels = db.session.query(Analysis).filter(Analysis.label.notlike('%label avg%')).filter(
-            Analysis.dataset_id.in_(dataset_ids)).filter(Analysis.results_reaction != None).with_entities(
-                Analysis.results_reaction, Analysis.label).all()
+        results_reactions_labels = db.session.query(Analysis).filter(Analysis.dataset_id.in_(dataset_ids)).filter(
+            Analysis.results_reaction != None).with_entities(Analysis.results_reaction, Analysis.label).all()
         results_reactions = [value[0][0] for value in results_reactions_labels]
         labels = [value[1] for value in results_reactions_labels]
         groups = db.session.query(Dataset.group).filter(Dataset.id.in_(dataset_ids)).all()
-        groups = [group[0] for group in groups]
-        labels = [0 if label in groups else 1 for label in labels]
-        path = '../trained_models/' + disease_name.replace(' ', '_') + '_' + str(disease_id[0]) + '_model.p'
+        def is_healthy(label):
+            for group, in groups:
+                if group.lower() + ' label avg' == label or group == label:
+                    return True
+            return False
+        labels = [0 if is_healthy(label) else 1 for label in labels]
+        path = '../trained_models/' + disease_name.replace(' ', '_') + '_' + str(disease_id) + '_model.p'
         try:
-            pipe = Pipeline([
-                ('vect', DictVectorizer(sparse=False)),
-                ('pca', PCA()),
-                ('clf', LogisticRegression(C=0.3e-6, random_state=43, solver='lbfgs'))
-            ])
-            model = pipe.fit(results_reactions, labels)
+            fs = ('fs', Pipeline([
+                            ('vt', DictInput(VarianceThreshold(0.01), feature_selection=True)),
+                            ('skb', DictInput(SelectKBest(k=100), feature_selection=True))
+                        ]))
+            vect = ('vect', DictVectorizer(sparse=True))
+            lr = ('lr', LogisticRegression(penalty='l1', tol=0.015, C=0.0009, intercept_scaling=0.3, random_state=42, solver='liblinear', max_iter=100000))
+            lr_pipe = Pipeline([fs, vect, lr])
+            rf = ('rf', RandomForestClassifier(n_estimators=100, random_state=42))
+            rf_pipe = Pipeline([fs, vect, rf])
+            svc = ('svc', SVC(gamma='auto', probability=True, random_state=42))
+            svc_pipe = Pipeline([fs, vect, svc])
+            pipes = [lr_pipe, rf_pipe, svc_pipe]
+            models = []
+            for pipe in pipes:
+                model = {}
+                model['model'] = pipe.fit(results_reactions, labels)
+                kf = StratifiedKFold(n_splits=10)
+                for scoring in ['precision', 'recall', 'f1']:
+                    score = cross_val_score(estimator=pipe, X=results_reactions, y=labels, cv=kf, scoring=scoring)
+                    score = score[score != 0].mean()
+                    model[scoring] = score
+                models.append(model)
+            models = sorted(models, key=lambda model: model['f1'], reverse=True)
             save = {}
-            save['disease_name'] = str(disease_name) + ' (' + disease_synonym + ')'
-            save['model'] = model
-            size = len(labels)
-            if size < 50:
-                kf = StratifiedKFold(n_splits=2, shuffle=True, random_state=43)
-            elif size < 75:
-                kf = StratifiedKFold(n_splits=3, shuffle=True, random_state=43)
-            elif size < 100:
-                kf = StratifiedKFold(n_splits=5, shuffle=True, random_state=43)
-            else:
-                kf = StratifiedKFold(n_splits=10, shuffle=True, random_state=43)
-            for scoring in ['precision', 'recall', 'f1']:
-                score = cross_val_score(estimator=pipe, X=results_reactions, y=labels, cv=kf, scoring=scoring).mean()
-                save[scoring] = score
+            save['disease'] = str(disease_name) + ' (' + disease_synonym + ')'
+            model = models[0]
+            save['model'] = model['model']
+            save['precision'] = model['precision']
+            save['recall'] = model['recall']
+            save['f1'] = model['f1']
             with open(path, 'wb') as f:
                 pickle.dump(save, f)
         except Exception as e:
