@@ -3,7 +3,7 @@ import pickle
 
 from metabolitics3d.preprocessing import MetaboliticsPipeline
 import celery
-from .models import db, Analysis, Dataset, MetabolomicsData, Disease
+from .models import db, Analysis, Dataset, MetabolomicsData, Disease, DiseaseModel
 from .services.mail_service import *
 import json
 import requests
@@ -14,7 +14,7 @@ from sklearn.decomposition import PCA
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LogisticRegression
 from collections import OrderedDict
-from sklearn.model_selection import cross_val_score, StratifiedKFold
+from sklearn.model_selection import cross_val_score, StratifiedKFold, cross_validate
 from sklearn.metrics import f1_score
 import sys
 from .dpm import *
@@ -23,6 +23,8 @@ from sklearn_utils.preprocessing import *
 from sklearn.feature_selection import VarianceThreshold, SelectKBest
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
+import random
+import numpy as np
 
 
 @celery.task()
@@ -124,8 +126,13 @@ def enhance_synonyms(metabolites):
 @celery.task(name='train_save_model')
 def train_save_model():
     print('Training and saving models...')
+    db.create_all()
     disease_ids = db.session.query(Dataset.disease_id).filter(Dataset.group != 'not_provided').filter(Dataset.method_id == 1).distinct()
     for disease_id, in disease_ids:
+        seed = 41
+        random.seed(seed)
+        np.random.seed(seed)
+        os.environ['PYTHONHASHSEED'] = str(seed)
         disease_name = Disease.query.get(disease_id).name
         disease_synonym = Disease.query.get(disease_id).synonym
         dataset_ids = db.session.query(Dataset.id).filter(Dataset.disease_id == disease_id).filter(
@@ -141,40 +148,70 @@ def train_save_model():
                     return True
             return False
         labels = [0 if is_healthy(label) else 1 for label in labels]
-        path = '../trained_models/' + disease_name.replace(' ', '_') + '_' + str(disease_id) + '_model.p'
+        num_healthy = labels.count(0)
+        num_disease = labels.count(1)
+        file_path = '../trained_models/' + disease_name.replace(' ', '_') + '_' + str(disease_id) + '_model.p'
         try:
             fs = ('fs', Pipeline([
                             ('vt', DictInput(VarianceThreshold(0.01), feature_selection=True)),
                             ('skb', DictInput(SelectKBest(k=100), feature_selection=True))
                         ]))
             vect = ('vect', DictVectorizer(sparse=True))
-            lr = ('lr', LogisticRegression(penalty='l1', tol=0.015, C=0.0009, intercept_scaling=0.3, random_state=42, solver='liblinear', max_iter=100000))
+            lr = ('lr', LogisticRegression(penalty='l1', tol=0.015, C=0.0008, intercept_scaling=0.3, solver='liblinear', max_iter=100000))
             lr_pipe = Pipeline([fs, vect, lr])
-            rf = ('rf', RandomForestClassifier(n_estimators=100, random_state=42))
-            rf_pipe = Pipeline([fs, vect, rf])
-            svc = ('svc', SVC(gamma='auto', probability=True, random_state=42))
+            rfc = ('rfc', RandomForestClassifier(n_estimators=100))
+            rfc_pipe = Pipeline([fs, vect, rfc])
+            svc = ('svc', SVC(gamma='auto', probability=True))
             svc_pipe = Pipeline([fs, vect, svc])
-            pipes = [lr_pipe, rf_pipe, svc_pipe]
+            pipes = [('Logistic Regression ', lr_pipe), ('Random Forest Classification', rfc_pipe), ('Support Vector Classification', svc_pipe)]
             models = []
-            for pipe in pipes:
+            for algorithm, pipe in pipes:
                 model = {}
                 model['model'] = pipe.fit(results_reactions, labels)
-                kf = StratifiedKFold(n_splits=10)
-                for scoring in ['precision', 'recall', 'f1']:
-                    score = cross_val_score(estimator=pipe, X=results_reactions, y=labels, cv=kf, scoring=scoring)
-                    score = score[score != 0].mean()
-                    model[scoring] = score
+                if min(num_healthy, num_disease) < 10:
+                    kf = StratifiedKFold(n_splits=5)
+                    fold_number = 5
+                else:
+                    kf = StratifiedKFold(n_splits=10)
+                    fold_number = 10
+                scoring = ['f1', 'precision', 'recall']
+                scores = cross_validate(estimator=pipe, X=results_reactions, y=labels, scoring=scoring, cv=kf, return_train_score=False)
+                f1_scores = scores['test_f1']
+                precision_scores = scores['test_precision']
+                recall_scores = scores['test_recall']
+                model['f1_score'] = f1_scores[f1_scores != 0].mean()
+                model['precision_score'] = precision_scores[precision_scores != 0].mean()
+                model['recall_score'] = recall_scores[recall_scores != 0].mean()
+                model['algorithm'] = algorithm
                 models.append(model)
-            models = sorted(models, key=lambda model: model['f1'], reverse=True)
-            save = {}
-            save['disease'] = str(disease_name) + ' (' + disease_synonym + ')'
+            models = sorted(models, key=lambda model: model['f1_score'], reverse=True)
             model = models[0]
-            save['model'] = model['model']
-            save['precision'] = model['precision']
-            save['recall'] = model['recall']
-            save['f1'] = model['f1']
-            with open(path, 'wb') as f:
-                pickle.dump(save, f)
+            if model['f1_score'] > 0.7:
+                save = {}
+                save['disease'] = str(disease_name) + ' (' + disease_synonym + ')'
+                save['model'] = model['model']
+                save['f1_score'] = model['f1_score']
+                save['precision_score'] = model['precision_score']
+                save['recall_score'] = model['recall_score']
+                save['algorithm'] = model['algorithm']
+                disease_model = DiseaseModel(
+                    disease_id=disease_id,
+                    fold_number=fold_number,
+                    f1_score=model['f1_score'],
+                    precision_score=model['precision_score'],
+                    recall_score=model['recall_score'],
+                    creation_date=datetime.datetime.now(),
+                    file_path=file_path,
+                    algorithm=model['algorithm']
+                )
+                exists = db.session.query(DiseaseModel.id).filter_by(disease_id=disease_id).first() is not None
+                if exists:
+                    DiseaseModel.query.filter_by(disease_id=disease_id).delete()
+                    db.session.commit()
+                db.session.add(disease_model)
+                db.session.commit()
+                with open(file_path, 'wb') as f:
+                    pickle.dump(save, f)
         except Exception as e:
             print(e)
     print('Training and saving models done.')
