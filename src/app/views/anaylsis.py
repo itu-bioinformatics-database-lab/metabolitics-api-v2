@@ -677,10 +677,10 @@ def disease_prediction(id: int):
     for file in os.listdir(dir):
         if file == '.keep':
             continue
-        path = os.path.join(dir, file)
-        if os.path.isfile(path):
+        file_path = os.path.join(dir, file)
+        if os.path.isfile(file_path):
             try:
-                saved = pickle.load(open(path, 'rb'))
+                saved = pickle.load(open(file_path, 'rb'))
                 disease = saved['disease']
                 model = saved['model']
                 pred = model.predict([results_reaction])[0]
@@ -1029,22 +1029,22 @@ def checkMapped(data):
         print(output)
         return output
 
-@app.route('/models/all', methods=['GET'])
+@app.route('/models/scores', methods=['GET'])
 def get_model_scores():
     scores = {}
     dir = '../trained_models'
     for file in os.listdir(dir):
         if file == '.keep':
             continue
-        path = os.path.join(dir, file)
-        if os.path.isfile(path):
+        file_path = os.path.join(dir, file)
+        if os.path.isfile(file_path):
             try:
-                saved = pickle.load(open(path, 'rb'))
+                saved = pickle.load(open(file_path, 'rb'))
                 disease = saved['disease']
-                precision = saved['precision']
-                recall = saved['recall']
-                f1 = saved['f1']
-                scores[disease] = {'precision': precision, 'recall': recall, 'f1': f1}
+                f1_score = saved['f1_score']
+                precision_score = saved['precision_score']
+                recall_score = saved['recall_score']
+                scores[disease] = {'f1_score': f1_score, 'precision_score': precision_score, 'recall_score': recall_score}
             except Exception as e:
                 print(e)
     return jsonify(scores)
