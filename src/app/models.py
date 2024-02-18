@@ -175,3 +175,19 @@ class Analysis(db.Model):
 
     def __repr__(self):
         return '<Analysis %r>' % self.name
+
+class DiseaseModel(db.Model):
+    __tablename__ = 'diseasemodels'
+    id = db.Column(db.Integer, primary_key=True)
+    disease_id = db.Column(db.Integer, db.ForeignKey('diseases.id'))
+    disease = db.relationship('Disease')
+    fold_number = db.Column(db.Integer)
+    f1_score = db.Column(db.Float())
+    precision_score = db.Column(db.Float())
+    recall_score = db.Column(db.Float())
+    creation_date = db.Column(db.DateTime)
+    file_path = db.Column(db.String())
+    algorithm = db.Column(db.String())
+
+    def __repr__(self):
+        return '<DiseaseModel %r>' % self.id
