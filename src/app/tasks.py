@@ -192,6 +192,7 @@ def train_save_model():
                 save = {}
                 save['disease'] = str(disease_name) + ' (' + disease_synonym + ')'
                 save['model'] = model['model']
+                save['fold_number'] = fold_number
                 save['f1_score'] = model['f1_score']
                 save['precision_score'] = model['precision_score']
                 save['recall_score'] = model['recall_score']
