@@ -29,7 +29,7 @@ class BaseConfig:
     CELERYBEAT_SCHEDULE = {
         'train_save_model': {
             'task': 'train_save_model',
-            'schedule': crontab(minute='*/30')
+            'schedule': crontab(minute=15, hour=2, day_of_week=1)
         }
     }
 
