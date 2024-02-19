@@ -127,7 +127,6 @@ def enhance_synonyms(metabolites):
 @celery.task(name='train_save_model')
 def train_save_model():
     print('Training and saving models...')
-    db.create_all()
     disease_ids = db.session.query(Dataset.disease_id).filter(Dataset.group != 'not_provided').filter(Dataset.method_id == 1).distinct()
     for disease_id, in disease_ids:
         seed = 41
