@@ -1041,10 +1041,12 @@ def get_model_scores():
             try:
                 saved = pickle.load(open(file_path, 'rb'))
                 disease = saved['disease']
+                fold_number = saved['fold_number']
                 f1_score = saved['f1_score']
                 precision_score = saved['precision_score']
                 recall_score = saved['recall_score']
-                scores[disease] = {'f1_score': f1_score, 'precision_score': precision_score, 'recall_score': recall_score}
+                algorithm = saved['algorithm']
+                scores[disease] = {'fold_number': fold_number, 'f1_score': f1_score, 'precision_score': precision_score, 'recall_score': recall_score, 'algorithm': algorithm}
             except Exception as e:
                 print(e)
     return jsonify(scores)
