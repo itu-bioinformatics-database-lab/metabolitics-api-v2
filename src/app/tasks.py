@@ -25,6 +25,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 import random
 import numpy as np
+import math
 
 
 @celery.task()
@@ -183,7 +184,8 @@ def train_save_model():
                 model['precision_score'] = precision_scores[precision_scores != 0].mean()
                 model['recall_score'] = recall_scores[recall_scores != 0].mean()
                 model['algorithm'] = algorithm
-                models.append(model)
+                if not math.isnan(model['f1_score']) and not math.isnan(model['precision_score']) and not math.isnan(model['recall_score']):
+                    models.append(model)
             models = sorted(models, key=lambda model: model['f1_score'], reverse=True)
             model = models[0]
             if model['f1_score'] > 0.7:
