@@ -140,6 +140,8 @@ def train_save_model():
         results_reactions_labels = db.session.query(Analysis).filter(Analysis.dataset_id.in_(dataset_ids)).filter(
             Analysis.results_reaction != None).with_entities(Analysis.results_reaction, Analysis.label).all()
         results_reactions = [value[0][0] for value in results_reactions_labels]
+        if len(results_reactions) < 12:
+            continue
         labels = [value[1] for value in results_reactions_labels]
         groups = db.session.query(Dataset.group).filter(Dataset.id.in_(dataset_ids)).all()
         def is_healthy(label):
