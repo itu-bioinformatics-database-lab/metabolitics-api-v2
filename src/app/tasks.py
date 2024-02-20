@@ -137,8 +137,9 @@ def train_save_model():
         disease_synonym = Disease.query.get(disease_id).synonym
         dataset_ids = db.session.query(Dataset.id).filter(Dataset.disease_id == disease_id).filter(
             Dataset.group != 'not_provided').filter(Dataset.method_id == 1).all()
-        results_reactions_labels = db.session.query(Analysis).filter(Analysis.dataset_id.in_(dataset_ids)).filter(
-            Analysis.results_reaction != None).with_entities(Analysis.results_reaction, Analysis.label).all()
+        results_reactions_labels = db.session.query(Analysis).filter(Analysis.type == 'public').filter(
+            Analysis.dataset_id.in_(dataset_ids)).filter(Analysis.results_reaction != None).with_entities(
+                Analysis.results_reaction, Analysis.label).all()
         results_reactions = [value[0][0] for value in results_reactions_labels]
         if len(results_reactions) < 12:
             continue
