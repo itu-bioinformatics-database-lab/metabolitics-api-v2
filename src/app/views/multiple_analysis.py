@@ -15,6 +15,8 @@ import datetime
 import mwtab
 from timeit import default_timer as timer
 import json
+from collections import OrderedDict
+import requests
 
 
 ############################### Excel codes below
@@ -22,6 +24,11 @@ import json
 @app.route('/excel', methods =['GET','POST'])
 def excel():
     data = request.json['data']
+    metabolites = []
+    for d in data:
+        if d != [] and d[0] != None:
+            metabolites.append(d[0])
+    enhance_synonyms(metabolites)
     meta = request.json['meta']
     processed_data = excel_data_Prpcessing(data,meta)
     new_data = group_avg(processed_data)
@@ -29,15 +36,42 @@ def excel():
         processed_data['analysis'][k] = v
     # processed_data['analysis']
     #print (processed_data)
+    processed_data['metabolites'] = metabolites
     return jsonify(processed_data)
 
-
+def enhance_synonyms(metabolites):
+    with open('../datasets/assets/synonyms.json') as f:
+        synonyms = json.load(f, object_pairs_hook=OrderedDict)
+    with open('../datasets/assets/refmet_recon3d.json') as f:
+        refmet_recon3d = json.load(f, object_pairs_hook=OrderedDict)
+    try:
+        metabolite_name = '\n'.join(metabolites)
+        params = {
+            "metabolite_name": metabolite_name
+        }
+        res = requests.post("https://www.metabolomicsworkbench.org/databases/refmet/name_to_refmet_new_min.php", data=params).text.split('\n')
+        res.pop(0)
+        for line in res:
+            if line == '':
+                continue
+            line = line.split('\t')
+            met = line[0]
+            ref = line[1]
+            if ref in refmet_recon3d.keys():
+                rec_id = refmet_recon3d[ref]
+                if met not in synonyms.keys():
+                    synonyms.update({met : rec_id})
+    except Exception as e:
+        print(e)
+    with open('../datasets/assets/synonyms.json', 'w') as f:
+        json.dump(synonyms, f, indent=4)
 
 def metabolc(data):
     """
     this function takes data from excel sheet and return a list of metabolites in the sheet
     """
     metabols = []
+    metabols2 = {}
     mapping_metabolites = {}
     isMapped = {}
 
@@ -46,11 +80,11 @@ def metabolc(data):
     #     tempo = line.split(",")
     #     mapping_metabolites[tempo[0].strip()] = tempo[1].strip()
     #
-    with open('../datasets/assets/recon2.json') as f:
+    with open('../datasets/assets/recon3D.json') as f:
         mapping_data1= json.load(f)
         mapping_data1 = mapping_data1["metabolites"]
 
-    with open('../datasets/assets/synonyms_v.0.4.json') as f:
+    with open('../datasets/assets/synonyms.json') as f:
         mapping_data2= json.load(f)
 
 
@@ -62,22 +96,29 @@ def metabolc(data):
             if data[k][0] in mapping_data1.keys():
                 metabols.append(data[k][0])
                 isMapped[data[k][0]] = {'isMapped':True}
+                metabols2[data[k][0]] = data[k][0]
 
             elif data[k][0] in mapping_data2.keys():
-                metabols.append(mapping_data2[data[k][0]])
-                isMapped[mapping_data2[data[k][0]]] = {'isMapped': True}
+                temp = mapping_data2[data[k][0]]
+                temp = temp[0] if type(temp) is list else temp
+                metabols.append(temp)
+                isMapped[temp] = {'isMapped': True}
+                metabols2[temp] = data[k][0]
 
             # elif data[k][0] in mapping_metabolites.keys():
             #     metabols.append(mapping_metabolites[data[k][0]])
             #     isMapped[mapping_metabolites[data[k][0]]] = {'isMapped': True}
 
             else:
-                metabols.append(data[k][0])
-                isMapped[data[k][0]] = {'isMapped':False}
+                temp = data[k][0]
+                temp = temp[0] if type(temp) is list else temp
+                metabols.append(temp)
+                isMapped[temp] = {'isMapped':False}
+                metabols2[temp] = data[k][0]
 
 
 
-    return [metabols,isMapped]
+    return [metabols,isMapped,metabols2]
 
 
 
@@ -97,7 +138,10 @@ def user_metabol(data):
         temp = []
         for j in data:
             if len(j) > 0:
+                if i < len(j):
                     temp.append(j[i])
+                else:
+                    temp.append(None)
         container.append(temp)
 
     for row in container:
@@ -126,17 +170,18 @@ def excel_data_Prpcessing(data, meta):
 
     users_metabolite = {}
     data2 = user_metabol(data)
-    metabol,isMapped = metabolc(data)
+    metabol,isMapped,metabol2 = metabolc(data)
 
     for key, value in data2.items():
         temp = {}
         for index_metas in range(0, len(value), 1):
-            temp[metabol[index_metas]] =  value[index_metas]
+            if value[index_metas] != None:
+                temp[metabol[index_metas]] =  value[index_metas]
 
         users_metabolite[key] = {"Metabolites": temp, "Label": users_labels[key]}
     #
     processed_users_data = {"study_name": study_name, "group": group_control_label,
-                            "analysis": users_metabolite,'isMapped':isMapped}
+                            "analysis": users_metabolite,'isMapped':isMapped, 'metabol':metabol2}
 
     return processed_users_data
 
@@ -268,11 +313,11 @@ def mwlab_mapper():
         isMapped = {}
         #
         #
-        with open('../datasets/assets/recon2.json') as f:
+        with open('../datasets/assets/recon3D.json') as f:
             mapping_data1 = json.load(f)
             mapping_data1 = mapping_data1["metabolites"]
 
-        with open('../datasets/assets/synonyms_v.0.4.json') as f:
+        with open('../datasets/assets/synonyms.json') as f:
             mapping_data2 = json.load(f)
 
         local = mwtabReader(name)
@@ -348,7 +393,7 @@ def group_avg(sample_data3,checker=1):
 
 
         if v["Label"].lower() not in labels_case:
-            labels_case.setdefault(v["Label"],[])
+            labels_case.setdefault(v["Label"].lower(),[])
             labels_case[v["Label"].lower()].append(v['Metabolites'])
         else:
             labels_case[v["Label"].lower()].append(v['Metabolites'])
@@ -376,7 +421,7 @@ def group_avg(sample_data3,checker=1):
 
 
 
-    final.append(["Group Avg",labels])
+    #final.append(["Group Avg",labels])
     final_combined = average(final)
     return final_combined
 

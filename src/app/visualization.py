@@ -75,7 +75,7 @@ class HeatmapVisualization:
         heat_data = heat_data[y_leaves, :]
         heat_data = heat_data[:, x_leaves]
 
-        hx = np.array(['%s_%d' % i[::-1] for i in enumerate(labels)])[x_leaves]
+        hx = np.array(['%s %d' % i[::-1] for i in enumerate(labels)])[x_leaves]
 
         hy = pathways[y_leaves]
 

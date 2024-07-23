@@ -20,8 +20,8 @@ from app.models import db, Method, User, Disease
 from app.DOParser import DOParser
 
 from sklearn_utils.utils import SkUtilsIO
-from metabolitics.preprocessing import *
-from metabolitics.utils import load_network_model
+from metabolitics3d.preprocessing import *
+from metabolitics3d.utils import load_network_model
 
 @click.group()
 def cli():
@@ -39,13 +39,16 @@ def run_api():
 
 @cli.command()
 def run_celery():
-    call('celery -A app.celery worker')
+    call('celery -A app.celery worker', shell=True)
     # celery4 = make_celery(app)
     #call('celery -A app.celery.celery worker -l info -Q celery')
 
     # call('celery --app =app worker --loglevel=info')
     # make_celery(app)
 
+@cli.command()
+def run_celery_beat():
+    call('celery -A app.celery beat', shell=True)
 
 @cli.command()
 def migrate():
@@ -69,6 +72,7 @@ def migrate():
     disease3 = Disease(name="abc", synonym="z")
     user = User(name="Alper", surname="Dokay", email="alperdokay@sehir.edu.tr", password="test123")
     user2 = User(name="Taj", surname="Saleh", email="tajothman@std.sehir.edu.tr", password="test123")
+    user3 = User(name="Demo", surname="User", email="demo", password="demo")
 
     db.session.add(method1)
     db.session.add(method2)
@@ -78,6 +82,7 @@ def migrate():
     db.session.add(disease3)
     db.session.add(user)
     db.session.add(user2)
+    db.session.add(user3)
     db.session.commit()
 
 
@@ -93,7 +98,7 @@ def generate_angular_friendly_model():
     This function convert json model into angular friendly json
     '''
     model = load_network_model()
-    model_json = json.load(open('../dataset/network/recon2.json'))
+    model_json = json.load(open('../dataset/network/recon3D.json'))
 
     reactions, metabolites = model_json['reactions'], model_json['metabolites']
     model_json = defaultdict(dict)

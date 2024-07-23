@@ -154,7 +154,6 @@ class Analysis(db.Model):
         self.name = name
         self.status = status
         self.type = type
-        self.start_time = datetime.datetime.now()
         self.user = user
 
     def clean_name_tag(self, dataset):
@@ -166,7 +165,7 @@ class Analysis(db.Model):
     def authenticated(self):
         if self.type in ['private', 'noise']:
             _jwt_required(app.config['JWT_DEFAULT_REALM'])
-            return self.user_id == current_identity.id
+            return self.owner_user_id == current_identity.id
         return True
 
     @staticmethod
@@ -176,3 +175,19 @@ class Analysis(db.Model):
 
     def __repr__(self):
         return '<Analysis %r>' % self.name
+
+class DiseaseModel(db.Model):
+    __tablename__ = 'diseasemodels'
+    id = db.Column(db.Integer, primary_key=True)
+    disease_id = db.Column(db.Integer, db.ForeignKey('diseases.id'))
+    disease = db.relationship('Disease')
+    fold_number = db.Column(db.Integer)
+    f1_score = db.Column(db.Float())
+    precision_score = db.Column(db.Float())
+    recall_score = db.Column(db.Float())
+    creation_date = db.Column(db.DateTime)
+    file_path = db.Column(db.String())
+    algorithm = db.Column(db.String())
+
+    def __repr__(self):
+        return '<DiseaseModel %r>' % self.id

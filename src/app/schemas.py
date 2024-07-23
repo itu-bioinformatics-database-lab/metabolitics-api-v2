@@ -15,6 +15,7 @@ class AnalysisInputSchema(Schema):
     group = fields.String(required=True)
     isMapped = fields.Dict(required=False)
     disease = fields.Integer(required=True)
+    metabolites = fields.List(required=False, cls_or_instance=fields.String())
 
 class AnalysisInputSchema2(Schema):
     study_name = fields.String(required=True)
