@@ -34,7 +34,7 @@ class BaseConfig:
     }
 
     try:
-        SECRET_KEY = open('../secret.txt').read()
+        SECRET_KEY = open('../../secret.txt').read()
     except:
         print('Warning: You need to generate secret.txt file to use api')
 
