@@ -12,7 +12,7 @@ COPY . /app
 WORKDIR /app
 
 # install requirements
-RUN pip3 install -r requirements.txt
+RUN pip3 --trusted-host pypi.python.org install -r requirements.txt
 
 WORKDIR /app/src
 
